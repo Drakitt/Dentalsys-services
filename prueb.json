@@ -1,0 +1,12 @@
+fecha,
+observacion,
+prescripcion,
+cuenta,
+saldo,
+diagnostico,
+nro_hc,
+id_tratamiento,
+id_usuario_reg,
+id_usuario_mod,
+fecha_reg,
+fecha_mod
