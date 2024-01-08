@@ -4,9 +4,9 @@ const routerApi = require('./routes');
 
 const app = express();
 const port = process.env.PORT || 3000;
-
+const cookieParser = require('cookie-parser');
 app.use(express.json());
-
+app.use(cookieParser());
 /* Solucionando error de cors y agregando limitaciones para puertos */
 
 const whiteList = ['http://localhost:8080', 'http://localhost:3000','http://localhost:4200', 'https://myapp.co'];

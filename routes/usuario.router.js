@@ -3,15 +3,16 @@ const express = require('express');
 const connection = require('../database/database');
 const TutorServices = require('../services/usuario.service');
 const PersonasServices = require('./../services/persona.service');
-
+const userServices = require('./../services/usuario.service');
+const authServices = require('./../services/auth.service');
 const router = express.Router();
 const service = new TutorServices();
 const serviceP = new PersonasServices();
-
+const servicU = new userServices();
+const servicAuth = new authServices();
 router.get('/xxx', async(req, res) => {
   res.json({text: 'the ad doesnt exist'});
 })
-
 router.get('/', async(req, res) => {
   service.getAll((err, data) => {
     if (err)

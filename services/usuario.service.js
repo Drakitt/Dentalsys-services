@@ -1,5 +1,8 @@
 const faker = require('faker');
 const connection = require('../database/database');
+const bcrypt = require('bcryptjs');
+const jwt = require("jsonwebtoken");
+const dbConfig = require('../keys');
 class PersonasServices {
 
   constructor() {
@@ -16,6 +19,51 @@ class PersonasServices {
 
       console.log("ads: ", res);
       result(null, res);
+    });
+  };
+  findByUsername = (name, result) => {
+    const query = 'SELECT * FROM usuario WHERE nombre_usuario LIKE ?';
+    const searchTerm = `%${name}%`;
+  
+    connection.query(query, [searchTerm], (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+  
+      console.log("ads: ", res);
+      result(null, res);
+    });
+  };
+   generateRefreshToken = (usuario) => {
+
+    return jwt.sign({ id: usuario.id_usuario||usuario.id, nombre: usuario.nombre_usuario||usuario.nombre, id_rol: usuario.rol_id ||usuario.id_rol}, dbConfig.KEY, { expiresIn: '7d' });
+  };
+  login = (username, password, result) => {
+    const query = 'SELECT * FROM usuario WHERE nombre_usuario =$1';
+    connection.query(query, [username], async (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      if (res.rows.length === 0) {
+        result(null, { mensaje: 'Credenciales inválidas' });
+        return;
+      }
+      const usuario = res.rows[0];
+      const passwordMatch = await bcrypt.compareSync(password, usuario.clave);
+      if (!passwordMatch) {
+        result(null, { mensaje: 'Credenciales inválidas' });
+        return;
+      }
+      
+    
+      const token = jwt.sign({ id: usuario.id_usuario, nombre: usuario.nombre_usuario, id_rol: usuario.rol_id }, dbConfig.KEY, { expiresIn: '1h' });
+      const refreshToken = this.generateRefreshToken(usuario);
+      result(null, { token,refreshToken  });
+
     });
   };
 
