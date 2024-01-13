@@ -5,10 +5,11 @@ const dbConfig = require('../keys')
 const userServices = require('./usuario.service');
 const servicU = new userServices();
 class authServices {
-    
+
      verificarToken(req, res, next) {
         const token = req.headers['authorization'];
         if (!token || !token.startsWith('Bearer ')) {
+          console.log('token',token)
             return res.status(401).json({ mensaje: 'Token no proporcionado o en formato incorrecto' });
           }
         if (!token) {
@@ -25,7 +26,7 @@ class authServices {
       }
        refreshTokenService = (refreshToken, callback) => {
         try {
-    
+
           const usuario = jwt.verify(refreshToken, dbConfig.KEY);
           const user= usuario;
           console.log(usuario)

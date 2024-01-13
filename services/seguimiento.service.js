@@ -13,8 +13,7 @@ class SeguimientoServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("seguimiento: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -26,8 +25,7 @@ class SeguimientoServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("seguimiento: ", res?.rows?.length);
       result(null, res);
     });
   };

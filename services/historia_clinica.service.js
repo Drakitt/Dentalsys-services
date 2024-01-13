@@ -13,8 +13,7 @@ class HistoriaClinicaServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("hc: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -27,8 +26,7 @@ class HistoriaClinicaServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("hc: ", res?.rows?.length);
       result(null, res);
     });
   };

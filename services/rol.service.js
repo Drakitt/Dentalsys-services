@@ -13,8 +13,7 @@ class RolServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("rol: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -27,8 +26,7 @@ class RolServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("rol: ", res?.rows?.length);
       result(null, res);
     });
   };

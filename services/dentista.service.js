@@ -13,12 +13,33 @@ class DentistaServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("dentistas: ", res?.rows?.length);
+      result(null, res);
+    });
+  };
+  getAllLimit = result => {
+    connection.query("SELECT * FROM dentista_v limit 20", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("dentistas: ", res?.rows?.length);
       result(null, res);
     });
   };
 
+  countAll = result => {
+    connection.query("SELECT COUNT(*) FROM dentista_v", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("dentistas: ", res?.rows?.length);
+      result(null, res);
+    });
+  };
   findById = (id, result) => {
     connection.query(`SELECT * FROM dentista_v WHERE nombre LIKE '%${id}%'`, (err, res) => {
       if (err) {
@@ -26,8 +47,7 @@ class DentistaServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("dentistas: ", res?.rows?.length);
       result(null, res);
     });
   };

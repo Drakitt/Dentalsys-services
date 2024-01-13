@@ -13,8 +13,7 @@ class TratamientoServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("tratamiento: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -27,8 +26,7 @@ class TratamientoServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("tratamiento: ", res?.rows?.length);
       result(null, res);
     });
   };

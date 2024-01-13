@@ -8,22 +8,42 @@ const router = express.Router();
 const service = new DentistaServices();
 const serviceP = new PersonaServices();
 
-router.get('/xxx', async(req, res) => {
-  res.json({text: 'the ad doesnt exist'});
+router.get('/xxx', async (req, res) => {
+  res.json({ text: 'the ad doesnt exist' });
 })
 
-router.get('/', async(req, res) => {
-  service.getAll((err, data) => {
+router.get('/', async (req, res, next) => {
+  service.getAllLimit((err, data) => {
     if (err)
       res.status(500).send({
         message:
           err.message || "Algo salió mal en el servidor."
       });
-    else res.json(data);
+    else {
+      service.countAll((err, data2) => {
+        if (err)
+          res.status(500).send({
+            message:
+              err.message || "Algo salió mal en el servidor."
+          });
+        else {
+          res.status(200).json({ data, data2 });
+        }
+      });
+    }
   });
 })
-
-router.get('/:id', async(req, res) =>{
+// router.get('/', async(req, res) => {
+//   service.getAll((err, data) => {
+//     if (err)
+//       res.status(500).send({
+//         message:
+//           err.message || "Algo salió mal en el servidor."
+//       });
+//     else res.json(data);
+//   });
+// })
+router.get('/:id', async (req, res) => {
   service.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
@@ -39,7 +59,7 @@ router.get('/:id', async(req, res) =>{
   });
 })
 
-router.get('/one/:id', async(req, res) =>{
+router.get('/one/:id', async (req, res) => {
   service.GetOneById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
@@ -55,7 +75,7 @@ router.get('/one/:id', async(req, res) =>{
   });
 })
 
-router.post('/nuevo', async(req, res) =>{
+router.post('/nuevo', async (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
@@ -100,7 +120,7 @@ router.post('/nuevo', async(req, res) =>{
     };
   });
 })
-router.post('/', async(req, res) =>{
+router.post('/', async (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
@@ -126,7 +146,7 @@ router.post('/', async(req, res) =>{
   });
 })
 
-router.patch('/:id', async(req, res) =>{
+router.patch('/:id', async (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "No hay elementos"
@@ -150,7 +170,7 @@ router.patch('/:id', async(req, res) =>{
 
 })
 
-router.delete('/:id', async(req, res) =>{
+router.delete('/:id', async (req, res) => {
   service.remove(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {

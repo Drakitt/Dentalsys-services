@@ -16,23 +16,21 @@ class PersonasServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("usuario: ", res?.rows?.length);
       result(null, res);
     });
   };
   findByUsername = (name, result) => {
     const query = 'SELECT * FROM usuario WHERE nombre_usuario LIKE ?';
     const searchTerm = `%${name}%`;
-  
+
     connection.query(query, [searchTerm], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
         return;
       }
-  
-      console.log("ads: ", res);
+        console.log("usuario: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -58,8 +56,8 @@ class PersonasServices {
         result(null, { mensaje: 'Credenciales inválidas' });
         return;
       }
-      
-    
+
+
       const token = jwt.sign({ id: usuario.id_usuario, nombre: usuario.nombre_usuario, id_rol: usuario.rol_id }, dbConfig.KEY, { expiresIn: '1h' });
       const refreshToken = this.generateRefreshToken(usuario);
       result(null, { token,refreshToken  });
@@ -74,8 +72,7 @@ class PersonasServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("usuario: ", res?.rows?.length);
       result(null, res);
     });
   };

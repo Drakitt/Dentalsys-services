@@ -13,8 +13,7 @@ class EvaluacionHcServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("evaluacion_hc: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -27,8 +26,7 @@ class EvaluacionHcServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("evaluacion_hc: ", res?.rows?.length);
       result(null, res);
     });
   };

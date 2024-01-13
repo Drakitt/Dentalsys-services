@@ -65,8 +65,7 @@ class PacienteServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("paciente: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -78,8 +77,7 @@ class PacienteServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("paciente: ", res?.rows?.length);
       result(null, res);
     });
   };

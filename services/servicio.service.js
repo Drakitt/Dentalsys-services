@@ -13,8 +13,7 @@ class ServicioServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("servicio: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -27,8 +26,7 @@ class ServicioServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("servicio: ", res?.rows?.length);
       result(null, res);
     });
   };

@@ -36,8 +36,7 @@ class PersonaServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("persona: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -49,8 +48,7 @@ class PersonaServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("persona: ", res?.rows?.length);
       result(null, res);
     });
   };

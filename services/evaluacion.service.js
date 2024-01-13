@@ -13,8 +13,7 @@ class EvaluacionServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("evaluacion: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -27,8 +26,7 @@ class EvaluacionServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("evaluacion: ", res?.rows?.length);
       result(null, res);
     });
   };

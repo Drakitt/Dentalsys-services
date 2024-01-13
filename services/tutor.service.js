@@ -13,8 +13,7 @@ class TutorServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("tutor: ", res?.rows?.length);
       result(null, res);
     });
   };
@@ -26,8 +25,7 @@ class TutorServices {
         result(null, err);
         return;
       }
-
-      console.log("ads: ", res);
+      console.log("tutor: ", res?.rows?.length);
       result(null, res);
     });
   };

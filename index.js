@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes');
+// var mongoose = require('mongoose');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -9,7 +10,7 @@ app.use(express.json());
 app.use(cookieParser());
 /* Solucionando error de cors y agregando limitaciones para puertos */
 
-const whiteList = ['http://localhost:8080', 'http://localhost:3000','http://localhost:4200', 'https://myapp.co'];
+const whiteList = ['http://localhost:8080', 'http://localhost:3000','http://localhost:4200', 'https://myapp.co', ,'http://localhost:49926'];
 const options = {
   origin: (origin, callback) => {
     if (whiteList.includes(origin) || !origin) {
