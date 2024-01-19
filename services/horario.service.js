@@ -55,8 +55,8 @@ class HorarioServices {
       [
         newValues.p_id_horario,
         newValues.p_operacion,
-        newValues.p_hora,
-        newValues.p_fecha,
+        newValues.p_horas,
+        newValues.p_dias,
         newValues.p_turno
       ],
       (err, res) => {
@@ -76,8 +76,8 @@ class HorarioServices {
       [
         id,
         newValues.p_operacion,
-        newValues.p_hora,
-        newValues.p_fecha,
+        newValues.p_horas,
+        newValues.p_dias,
         newValues.p_turno
       ], (err, res) => {
       if (err) {

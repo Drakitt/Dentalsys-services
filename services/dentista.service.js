@@ -18,7 +18,7 @@ class DentistaServices {
     });
   };
   getAllLimit = result => {
-    connection.query("SELECT * FROM dentista_v limit 20", (err, res) => {
+    connection.query("SELECT id_dentista, nombre, apellidos, celular, email, ci FROM dentista_v limit 20", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -37,7 +37,7 @@ class DentistaServices {
         return;
       }
       console.log("dentistas: ", res?.rows?.length);
-      result(null, res);
+      result(null, res?.rows?.shift()?.count);
     });
   };
   findById = (id, result) => {
@@ -53,18 +53,20 @@ class DentistaServices {
   };
 
   GetOneById = (id, result) => {
-    connection.query(`SELECT * FROM dentista_v WHERE iddentista = ${id}`, (err, res) => {
+    connection.query(`SELECT * FROM dentista_v WHERE id_dentista = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
         return;
       }
 
-      if (res.length) {
-        console.log("devolver: ", res[0]);
-        result(null, res[0]);
+      if (res?.rows?.length) {
+        console.log("devolver: ", res.rows[0]);
+        result(null, res.rows.shift());
         return;
       }
+      console.log("dentistas: ", res?.rows);
+
 
       result({ kind: "no se encontró el id" }, null);
     });

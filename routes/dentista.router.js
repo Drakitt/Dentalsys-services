@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
               err.message || "Algo salió mal en el servidor."
           });
         else {
-          res.status(200).json({ data, data2 });
+          res.status(200).json({ data, data2, pagination: Math.ceil(300/20) });
         }
       });
     }
@@ -44,7 +44,7 @@ router.get('/', async (req, res, next) => {
 //   });
 // })
 router.get('/:id', async (req, res) => {
-  service.findById(req.params.id, (err, data) => {
+  service.GetOneById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

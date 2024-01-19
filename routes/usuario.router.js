@@ -25,7 +25,7 @@ router.get('/', async(req, res) => {
 })
 
 router.get('/:id', async(req, res) =>{
-  service.findById(req.params.id, (err, data) => {
+  service.GetOneById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
