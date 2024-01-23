@@ -37,6 +37,21 @@ router.get('/:id', async (req, res) => {
   });
 })
 
+router.get('/:id', async (req, res) => {
+  service.getPacienteHC(req.params.id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `no se encontró el id id ${req.params.id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "algo salió mal al encontrar el id " + req.params.id
+        });
+      }
+    } else res.send(data);
+  });
+})
 router.get('/one/:id', async (req, res) => {
   service.GetOneById(req.params.id, (err, data) => {
     if (err) {

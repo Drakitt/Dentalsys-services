@@ -58,6 +58,17 @@ class PacienteServices {
     });
   };
 
+  getAllLimit = result => {
+    connection.query("SELECT id_paciente, nombre, apellidos, celular, email, ci FROM paciente_v limit 20", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("pacientes: ", res?.rows?.length);
+      result(null, res);
+    });
+  };
   getAll = result => {
     connection.query("SELECT * FROM paciente_v", (err, res) => {
       if (err) {
@@ -67,6 +78,18 @@ class PacienteServices {
       }
       console.log("paciente: ", res?.rows?.length);
       result(null, res);
+    });
+  };
+
+  countAll = result => {
+    connection.query("SELECT COUNT(*) FROM paciente_v", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("pacientes: ", res?.rows?.length);
+      result(null, res?.rows?.shift()?.count);
     });
   };
 

@@ -142,17 +142,37 @@ router.patch('/:id', async (req, res) => {
 
 })
 
-router.get('/', async (req, res) => {
-  service.getAll((err, data) => {
+// router.get('/', async (req, res) => {
+//   service.getAll((err, data) => {
+//     if (err)
+//       res.status(500).send({
+//         message:
+//           err.message || "Algo salió mal en el servidor."
+//       });
+//     else res.json(data);
+//   });
+// })
+router.get('/', async (req, res, next) => {
+  service.getAllLimit((err, data) => {
     if (err)
       res.status(500).send({
         message:
           err.message || "Algo salió mal en el servidor."
       });
-    else res.json(data);
+    else {
+      service.countAll((err, data2) => {
+        if (err)
+          res.status(500).send({
+            message:
+              err.message || "Algo salió mal en el servidor."
+          });
+        else {
+          res.status(200).json({ data, data2, pagination: Math.ceil(300/20) });
+        }
+      });
+    }
   });
 })
-
 router.get('/:id', async (req, res) => {
   service.findById(req.params.id, (err, data) => {
     if (err) {

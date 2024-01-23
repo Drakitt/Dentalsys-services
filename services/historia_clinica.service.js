@@ -7,7 +7,18 @@ class HistoriaClinicaServices {
   }
 
   getAll = result => {
-    connection.query("SELECT * FROM historia_clinica", (err, res) => {
+    connection.query("SELECT * FROM historia_clinica_v", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("hc: ", res?.rows?.length);
+      result(null, res);
+    });
+  };
+  getPacienteHC = (id, result) => {
+    connection.query(`SELECT * FROM historia_clinica_v WHERE paciente_id = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

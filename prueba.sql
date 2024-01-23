@@ -1,12 +1,32 @@
-CREATE SEQUENCE public.dentista_horario_id_seq
-    INCREMENT 1
-    START 1
-    MINVALUE 1
-    MAXVALUE 2147483647
-    CACHE 1
-    OWNED BY dentista_horario.id_dentista_horario;
+-- View: public.historia_clinica_v
+-- DROP VIEW public.historia_clinica_v;
+CREATE
+OR REPLACE VIEW public.historia_clinica_v AS
+SELECT
+  hc.nro_hc,
+  hc.municipio,
+  hc.establecimiento,
+  hc.sedes,
+  p.id_paciente,
+  p.estado_civil,
+  p.nacion_originaria,
+  p.grado_educativo,
+  p.idioma,
+  p.lugar_nacimiento,
+  p.fecha_nacimiento,
+  p.ocupacion,
+  p.sexo,
+  p.tutor_id,
+  pp.nombre,
+  pp.apellidos,
+  pp.celular,
+  pp.telefono,
+  pp.email,
+  pp.ci,
+  p.persona_id
+FROM
+  historia_clinica hc
+  JOIN paciente p ON hc.paciente_id = p.id_paciente
+  JOIN persona pp ON p.persona_id = pp.id_persona;
 
-ALTER SEQUENCE public.dentista_horario_id_seq
-    OWNER TO postgres;
-
-nextval('dentista_horario_id_seq'::regclass)
+ALTER TABLE public.historia_clinica_v OWNER TO postgres;
