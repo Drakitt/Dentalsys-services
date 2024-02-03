@@ -88,122 +88,17 @@ class PersonasServices {
     });
   };
   GetInputs = (id, result) => {
-    connection.query(`SELECT foto, nombre_usuario, clave, nombre, apellidos, celular, email, ci, direccion, telefono, horas, dias, turno, tipo, detalles, costo FROM dentista_v WHERE id_usuario = ${id}`, (err, res) => {
+    connection.query(`SELECT * FROM input_schema WHERE grupo SIMILAR TO '%${id}%'`, (err, res) => {
       if (err) {
         console.log("error: ", err);
-        result(err, null);
+        result(null, err);
         return;
       }
-
-      if (res?.rows?.length) {
-
-        const keys = Object.keys(res.rows[0])
-        const obj = res.rows[0];
-        let inputs = {};
-        let objIn = [];
-        for (let [index, value] of keys.entries()) {
-          if (value == 'dias' || value == 'horas') {
-            const opt = value == 'dias' ?
-              [
-                { key: 'lunes', value: 'Lunes' },
-                { key: 'martes', value: 'Martes' },
-                { key: 'miercoles', value: 'Miercoles' },
-                { key: 'jueves', value: 'Jueves' },
-                { key: 'viernes', value: 'Viernes' }
-              ]
-              :
-              [
-                { key: 'ocho', value: '8:00' },
-                { key: 'nueve', value: '9:00' },
-              ];
-            objIn.push({
-              key: value,
-              label: value.replace(/_/g, ' ').toUpperCase(),
-              value: obj[value],
-              required: true,
-              order: index,
-              controlType: 'textbox'
-            })
-            objIn.push({
-              key: 'add_' + value,
-              label: 'AÑADIR ' + value.replace(/_/g, ' ').toUpperCase(),
-              options: opt,
-              order: index,
-              controlType: 'dropdown'
-            })
-          } else {
-            if (value != 'clave') {
-              objIn.push({
-                key: value,
-                label: value.replace(/_/g, ' ').toUpperCase(),
-                value: obj[value],
-                required: true,
-                order: index,
-                controlType: value != 'foto' ? 'textbox' : 'image'
-              })
-            }
-            if (value == 'clave') {
-              objIn.push({
-                key: value,
-                label: value.replace(/_/g, ' ').toUpperCase(),
-                value: '',
-                required: false,
-                order: index,
-                type: 'password',
-                controlType: 'textbox'
-              }, {
-                key: 'newpass',
-                label: 'NUEVA CLAVE',
-                value: '',
-                required: false,
-                order: index,
-                type: 'password',
-                controlType: 'textbox'
-              }, {
-                key: 'validateNew',
-                label: 'VALIDAR NUEVA CLAVE',
-                value: '',
-                required: false,
-                order: index,
-                type: 'password',
-                controlType: 'textbox'
-              },
-              )
-            }
-          }
-
-          if (value.match(/foto|nombre_usuario|clave|telefono|turno|costo/)) {
-            let nameList = value.replace(/_/g, ' ').toUpperCase();
-            switch (value) {
-              case "clave":
-                nameList = 'CAMBIAR CLAVE'
-                break;
-              case "telefono":
-                nameList = 'CONTACTO'
-                break;
-              case "turno":
-                nameList = 'HORARIOS'
-                break;
-              case "costo":
-                nameList = 'SERVICIOS'
-                break;
-
-              default:
-                break;
-            }
-            inputs[nameList]=objIn
-            objIn=[];
-          }
-
-        }
-        // console.log(inputs)
-        result(null, inputs);
-        return;
-      }
-
-      result({ kind: "no se encontró el id" }, null);
+      console.log("usuario: ", res?.rows?.length);
+      result(null, res.rows);
     });
   };
+
 
   GetOneById = (id, result) => {
     connection.query(`SELECT * FROM dentista_v WHERE id_usuario = ${id}`, (err, res) => {
@@ -214,7 +109,6 @@ class PersonasServices {
       }
 
       if (res?.rows?.length) {
-        console.log("devolver: ", res.rows);
         result(null, res.rows[0]);
         return;
       }
