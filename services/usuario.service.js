@@ -60,7 +60,7 @@ class PersonasServices {
 
       const token = jwt.sign({ id: usuario.id_usuario, nombre: usuario.nombre_usuario, id_rol: usuario.rol_id }, dbConfig.KEY, { expiresIn: '1h' });
       const refreshToken = this.generateRefreshToken(usuario);
-      result(null, { token, refreshToken, usuario_id: usuario.id_usuario });
+      result(null, { token, refreshToken, usuario_id: usuario.id_usuario, rol_id: usuario.rol_id });
 
     });
   };
