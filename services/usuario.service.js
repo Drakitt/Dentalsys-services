@@ -58,7 +58,7 @@ class PersonasServices {
       }
 
 
-      const token = jwt.sign({ id: usuario.id_usuario, nombre: usuario.nombre_usuario, id_rol: usuario.rol_id }, dbConfig.KEY, { expiresIn: '1h' });
+      const token = jwt.sign({ id: usuario.id_usuario, nombre: usuario.nombre_usuario, rol_id: usuario.rol_id }, dbConfig.KEY, { expiresIn: '1h' });
       const refreshToken = this.generateRefreshToken(usuario);
       result(null, { token, refreshToken, usuario_id: usuario.id_usuario, rol_id: usuario.rol_id });
 
@@ -91,7 +91,7 @@ class PersonasServices {
     connection.query(`SELECT * FROM input_schema WHERE grupo SIMILAR TO '%${id}%'`, (err, res) => {
       if (err) {
         console.log("error: ", err);
-        result(null, err);
+        result("inputs user", err);
         return;
       }
       console.log("usuario: ", res?.rows?.length);

@@ -18,7 +18,7 @@ class DentistaServices {
     });
   };
   getAllLimit = result => {
-    connection.query("SELECT id_dentista as id, nombre, apellidos, celular, email, ci FROM dentista_v limit 20", (err, res) => {
+    connection.query("SELECT id_dentista as id, nombre, apellido_paterno, apellido_materno, celular, email, ci FROM dentista_v limit 20", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

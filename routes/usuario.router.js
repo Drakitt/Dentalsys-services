@@ -40,19 +40,21 @@ router.get('/:id', async(req, res) =>{
   });
 })
 
-router.get('/inputs/:id', async(req, res) =>{
-  service.GetInputs(req.params.id, (err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `no se encontró el id id ${req.params.id}.`
-        });
-      } else {
-        res.status(500).send({
-          message: "algo salió mal al encontrar el id " + req.params.id
-        });
-      }
-    } else res.send(data);
+router.post('/inputs', async(req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+
+console.log(req.body.regex)
+  service.GetInputs(req.body.regex, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Algo salió mal"
+      });
+    else res.json({ status: 'ok', message: 'request succed', data: data });
   });
 })
 router.get('/one/:id', async(req, res) =>{

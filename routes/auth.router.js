@@ -22,7 +22,7 @@ router.post('/login', (req, res) => {
       return res.status(401).json({ mensaje: 'Credenciales inválidas' });
     }
 
-    res.json({ token: result.token, refreshToken:result.refreshToken, usuario_id: result.usuario_id });
+    res.json({ token: result.token, refreshToken:result.refreshToken, usuario_id: result.usuario_id, rol_id: result.rol_id });
   });
 });
 

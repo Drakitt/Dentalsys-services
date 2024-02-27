@@ -8,6 +8,7 @@ const tutorRouter = require('./tutor.router');
 const usersRouter = require('./users.router');
 const usuarioRouter = require('./usuario.router');
 const pacienteRouter = require('./paciente.router');
+const historiaRouter = require('./historia_clinica.router');
 const authRouter = require('./auth.router');
 
 const authServices = require('./../services/auth.service');
@@ -24,6 +25,7 @@ function routerApi(app) {
   router.use('/tutor',servicAuth.verificarToken,tutorRouter);
   router.use('/users',servicAuth.verificarToken, usersRouter);
   router.use('/usuario',servicAuth.verificarToken, usuarioRouter);
+  router.use('/hc',servicAuth.verificarToken, historiaRouter);
   router.use('/auth', authRouter);
 }
 

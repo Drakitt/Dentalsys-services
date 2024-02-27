@@ -59,7 +59,7 @@ class PacienteServices {
   };
 
   getAllLimit = result => {
-    connection.query("SELECT id_paciente, nombre, apellidos, celular, email, ci FROM paciente_v limit 20", (err, res) => {
+    connection.query("SELECT id_paciente as id, nombre, apellido_paterno, apellido_materno, celular, email, ci FROM paciente_v limit 20", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -94,7 +94,7 @@ class PacienteServices {
   };
 
   findById = (id, result) => {
-    connection.query(`SELECT * FROM paciente_v WHERE idpaciente LIKE '%${id}%'`, (err, res) => {
+    connection.query(`SELECT * FROM paciente_v WHERE id_paciente LIKE '%${id}%'`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -106,7 +106,7 @@ class PacienteServices {
   };
 
   GetOneById = (id, result) => {
-    connection.query(`SELECT * FROM paciente_v WHERE idpaciente = ${id}`, (err, res) => {
+    connection.query(`SELECT * FROM paciente_v WHERE id_paciente = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);

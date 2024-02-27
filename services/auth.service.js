@@ -30,7 +30,7 @@ class authServices {
           const usuario = jwt.verify(refreshToken, dbConfig.KEY);
           const user= usuario;
           console.log(usuario)
-          const accessToken = jwt.sign({ id: user.id, nombre: user.nombre, id_rol: user.id_rol }, dbConfig.KEY, { expiresIn: '1h' });
+          const accessToken = jwt.sign({ id: user.id, nombre: user.nombre, rol_id: user.rol_id }, dbConfig.KEY, { expiresIn: '1h' });
           const nuevoRefreshToken = servicU.generateRefreshToken(user);
           callback(null, { accessToken, refreshToken: nuevoRefreshToken });
         } catch (error) {

@@ -1,12 +1,13 @@
 const { Pool } = require('pg');
-const dbConfig = require('../keys');
+const dbConfig = require('../keys2');
 
 const connection = new Pool({
   user: dbConfig.USER,
   password: dbConfig.PASSWORD,
   host: dbConfig.HOST,
   database: dbConfig.DB,
-  port: dbConfig.PORT
+  port: dbConfig.PORT,
+  ssl: true
 });
 
 connection.connect()
