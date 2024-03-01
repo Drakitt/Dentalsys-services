@@ -26,7 +26,7 @@ class authServices {
       }
        refreshTokenService = (refreshToken, callback) => {
         try {
-
+          console.log(refreshToken)
           const usuario = jwt.verify(refreshToken, dbConfig.KEY);
           const user= usuario;
           console.log(usuario)

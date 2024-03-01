@@ -28,7 +28,7 @@ router.post('/login', (req, res) => {
 
 router.post('/refresh-token', async (req, res) => {
   const refreshToken = req.body.refreshToken;
-
+console.log(refreshToken)
   if (!refreshToken) {
     return res.status(400).json({ mensaje: 'Refresh token no proporcionado' });
   }

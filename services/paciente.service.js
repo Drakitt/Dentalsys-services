@@ -59,7 +59,7 @@ class PacienteServices {
   };
 
   getAllLimit = result => {
-    connection.query("SELECT id_paciente as id, nombre, apellido_paterno, apellido_materno, celular, email, ci FROM paciente_v limit 20", (err, res) => {
+    connection.query("SELECT id_paciente as id, nombre, apellido_paterno, apellido_materno, celular, email, ci  FROM paciente_v limit 20", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
