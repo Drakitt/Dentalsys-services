@@ -7,7 +7,7 @@ class PacienteServices {
   }
 
   create = (newValues, result) => {
-    connection.query("CALL public.crud_paciente($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
+    connection.query("CALL public.crud_paciente($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
     [
       newValues.p_id_paciente,
       newValues.p_operacion,
@@ -21,6 +21,7 @@ class PacienteServices {
       newValues.p_ocupacion,
       newValues.p_tutor_id,
       newValues.p_sexo,
+      newValues.p_edad
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -33,7 +34,7 @@ class PacienteServices {
   };
 
   updateById = (id, newValues, result) => {
-    connection.query("CALL public.crud_paciente($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)",
+    connection.query("CALL public.crud_paciente($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)",
     [
       id,
       newValues.p_operacion,
@@ -47,6 +48,7 @@ class PacienteServices {
       newValues.p_ocupacion,
       newValues.p_tutor_id,
       newValues.p_sexo,
+      newValues.p_edad
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);
