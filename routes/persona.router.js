@@ -66,10 +66,12 @@ router.post('/', async (req, res) => {
     p_ci: req.body.ci,
     p_direccion: req.body.direccion,
     p_nombre: req.body.nombre,
-    p_apellidos: req.body.apellidos,
+    p_apellido_paterno: req.body.apellido_paterno,
+    p_apellido_materno: req.body.apellido_materno,
     p_telefono: req.body.telefono,
     p_celular: req.body.celular,
-    p_email: req.body.email
+    p_email: req.body.email,
+    p_foto: req.body.foto
   };
 
 
@@ -96,10 +98,12 @@ router.patch('/:id', async (req, res) => {
     p_ci: req.body.ci,
     p_direccion: req.body.direccion,
     p_nombre: req.body.nombre,
-    p_apellidos: req.body.apellidos,
+    p_apellido_paterno: req.body.apellido_paterno,
+    p_apellido_materno: req.body.apellido_materno,
     p_telefono: req.body.telefono,
     p_celular: req.body.celular,
-    p_email: req.body.email
+    p_email: req.body.email,
+    p_foto: req.body.foto
   };
 
   service.updateById(req.params.id, values, (err, data) => {
