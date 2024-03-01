@@ -13,7 +13,8 @@ class PersonaServices {
       newValues.p_ci,
       newValues.p_direccion,
       newValues.p_nombre,
-      newValues.p_apellidos,
+      newValues.p_apellido_paterno,
+      newValues.p_apellido_materno,
       newValues.p_telefono,
       newValues.p_celular,
       newValues.p_email
@@ -73,16 +74,18 @@ class PersonaServices {
 
 
   create = (newValues, result) => {
-    return(connection.query("CALL public.crud_persona($1,$2,$3,$4,$5,$6,$7,$8,$9)", [
+    return(connection.query("CALL public.crud_persona($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)", [
       newValues.p_operacion,
       newValues.p_id_persona,
       newValues.p_ci,
       newValues.p_direccion,
       newValues.p_nombre,
-      newValues.p_apellidos,
+      newValues.p_apellido_paterno,
+      newValues.p_apellido_materno,
       newValues.p_telefono,
       newValues.p_celular,
-      newValues.p_email
+      newValues.p_email,
+      newValues.p_foto
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -96,16 +99,18 @@ class PersonaServices {
   };
 
   updateById = (id, newValues, result) => {
-    connection.query("CALL public.crud_persona($1,$2,$3,$4,$5,$6,$7,$8,$9)", [
+    connection.query("CALL public.crud_persona($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)", [
       newValues.p_operacion,
       id,
       newValues.p_ci,
       newValues.p_direccion,
       newValues.p_nombre,
-      newValues.p_apellidos,
+      newValues.p_apellido_paterno,
+      newValues.p_apellido_materno,
       newValues.p_telefono,
       newValues.p_celular,
-      newValues.p_email
+      newValues.p_email,
+      newValues.p_foto
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -119,7 +124,7 @@ class PersonaServices {
 
 
   remove = (id, result) => {
-    connection.query("CALL public.paciente_crud(DELETE, $1, '', '', '', '', 0, 0, '')", id, (err, res) => {
+    connection.query("CALL public.paciente_crud(DELETE, $1, '', '', '','', '', 0, 0, '','')", id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
