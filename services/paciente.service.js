@@ -94,7 +94,7 @@ class PacienteServices {
       result(null, res?.rows?.shift()?.count);
     });
   };
-
+// no sirve este quiza en adelante
   findById = (id, result) => {
     connection.query(`SELECT * FROM paciente_v WHERE id_paciente LIKE '%${id}%'`, (err, res) => {
       if (err) {
@@ -107,6 +107,18 @@ class PacienteServices {
     });
   };
 
+  findByCi = (id, result) => {
+    connection.query(`SELECT * FROM paciente_v WHERE ci SIMILAR TO '%${id}%'`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("paciente: ", res?.rows?.length);
+      result(null, res.rows);
+    });
+  };
+
   GetOneById = (id, result) => {
     connection.query(`SELECT * FROM paciente_v WHERE id_paciente = ${id}`, (err, res) => {
       if (err) {
@@ -115,9 +127,9 @@ class PacienteServices {
         return;
       }
 
-      if (res.length) {
-        console.log("devolver: ", res[0]);
-        result(null, res[0]);
+      if (res.rows.length) {
+        console.log("paciente: ", res?.rows?.length);
+        result(null, res);
         return;
       }
 
