@@ -30,7 +30,8 @@ router.post('/', async (req, res) => {
     p_fecha_nacimiento: req.body.fecha_nacimiento,
     p_ocupacion: req.body.ocupacion,
     p_tutor_id: req.body.tutor_id,
-    p_sexo: req.body.sexo
+    p_sexo: req.body.sexo,
+    p_edad: req.body.edad
   };
   service.create(values, (err, data) => {
     if (err)
