@@ -136,6 +136,23 @@ class PacienteServices {
       result({ kind: "no se encontró el id" }, null);
     });
   };
+  remove = (id, result) => {
+    connection.query("CALL crud_paciente($1, 'DELETE', 0, '', '', '', '', '', '2012-12-12', '',0,'',0)", [id], (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+
+      if (res.affectedRows == 0) {
+        result({ kind: "no se encontró el id" }, null);
+        return;
+      }
+
+      console.log("se eliminó el anuncio: ", id);
+      result(null, res);
+    });
+  };
 
 }
 module.exports = PacienteServices;

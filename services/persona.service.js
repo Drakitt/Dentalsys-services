@@ -124,7 +124,7 @@ class PersonaServices {
 
 
   remove = (id, result) => {
-    connection.query("CALL public.paciente_crud(DELETE, $1, '', '', '','', '', 0, 0, '','')", id, (err, res) => {
+    connection.query("CALL crud_persona('DELETE', $1, '', '', '', '', '', 0, '', '')", [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

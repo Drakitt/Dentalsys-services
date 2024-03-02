@@ -85,7 +85,7 @@ class DentistaServices {
 
       if (res?.rows?.length) {
         console.log("devolver: ", res.rows[0]);
-        result(null, res.rows.shift());
+        result(null, res.rows[0]);
         return;
       }
       console.log("dentistas: ", res?.rows);
@@ -132,7 +132,7 @@ class DentistaServices {
 
 
   remove = (id, result) => {
-    connection.query("CALL dentalsys.dentista_crud(0, '', '', '', '', 0, 0, '', '', 'DELETE', ?)", id, (err, res) => {
+    connection.query("CALL crud_dentista($1,'DELETE', '')", [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
