@@ -132,7 +132,7 @@ class DentistaServices {
 
 
   remove = (id, result) => {
-    connection.query("CALL crud_dentista($1,'DELETE', '')", [id], (err, res) => {
+    connection.query("CALL crud_dentista($1,'DELETE', 0)", [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -144,7 +144,7 @@ class DentistaServices {
         return;
       }
 
-      console.log("se eliminó el anuncio: ", id);
+      console.log("se eliminó el dentista: ", id);
       result(null, res);
     });
   };

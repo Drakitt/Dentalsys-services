@@ -20,7 +20,7 @@ class ServicioServices {
 
   findById = (id, result) => {
     console.log(id);
-    connection.query(`SELECT * FROM servicio WHERE ci_paciente LIKE '%${id}%' OR celular_paciente LIKE '%${id}%'`, (err, res) => {
+    connection.query(`SELECT * FROM servicio_v WHERE paciente_id = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -91,7 +91,7 @@ class ServicioServices {
   };
 
   remove = (id, result) => {
-    connection.query("CALL public.crud_servicio($1,'DELETE','','',0)", id, (err, res) => {
+    connection.query("CALL public.crud_servicio($1,'DELETE','','',0)", [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

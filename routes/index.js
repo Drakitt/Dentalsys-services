@@ -10,6 +10,10 @@ const usuarioRouter = require('./usuario.router');
 const pacienteRouter = require('./paciente.router');
 const historiaRouter = require('./historia_clinica.router');
 const authRouter = require('./auth.router');
+const dentistaHorarioRouter = require('./dentista_horario.router');
+const dentistaServicioRouter = require('./dentista_servicio.router');
+const horarioRouter = require('./horario.router');
+const servicioRouter = require('./servicio.router');
 
 const authServices = require('./../services/auth.service');
 const servicAuth = new authServices();
@@ -26,6 +30,10 @@ function routerApi(app) {
   router.use('/users',servicAuth.verificarToken, usersRouter);
   router.use('/usuario',servicAuth.verificarToken, usuarioRouter);
   router.use('/hc',servicAuth.verificarToken, historiaRouter);
+  router.use('/servicio',servicAuth.verificarToken, servicioRouter);
+  router.use('/serviciodent',servicAuth.verificarToken, dentistaServicioRouter);
+  router.use('/horario',servicAuth.verificarToken, horarioRouter);
+  router.use('/horariodent',servicAuth.verificarToken, dentistaHorarioRouter);
   router.use('/auth', authRouter);
 }
 

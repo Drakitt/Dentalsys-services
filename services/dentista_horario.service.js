@@ -1,6 +1,6 @@
 const faker = require('faker');
 const connection = require('../database/database');
-class HorarioServices {
+class DentistaHorarioServices {
 
   constructor() {
     this.horario = [];
@@ -109,4 +109,4 @@ class HorarioServices {
   };
 
 }
-module.exports = HorarioServices;
+module.exports = DentistaHorarioServices;

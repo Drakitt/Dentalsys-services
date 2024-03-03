@@ -1,38 +1,38 @@
 const faker = require('faker');
 const connection = require('../database/database');
-class HorarioServices {
+class DentistaServicioServices {
 
   constructor() {
-    this.horario = [];
+    this.servicio = [];
   }
 
   getAll = result => {
-    connection.query("SELECT * FROM horario", (err, res) => {
+    connection.query("SELECT * FROM servicio_v", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
         return;
       }
-      console.log("horario: ", res?.rows?.length);
+      console.log("servicio: ", res?.rows?.length);
       result(null, res);
     });
   };
 
   findById = (id, result) => {
     console.log(id);
-    connection.query(`SELECT * FROM horario_v WHERE dentista_id = ${id}`, (err, res) => {
+    connection.query(`SELECT * FROM servicio_v WHERE paciente_id = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
         return;
       }
-      console.log("horario: ", res?.rows?.length);
+      console.log("servicio: ", res?.rows?.length);
       result(null, res);
     });
   };
 
   GetOneById = (id, result) => {
-    connection.query(`SELECT * FROM horario WHERE id_horario = ${id}`, (err, res) => {
+    connection.query(`SELECT * FROM servicio WHERE id_servicio = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -51,13 +51,12 @@ class HorarioServices {
 
   create = (newValues, result) => {
     connection.query(
-      "CALL public.crud_horario($1,$2,$3,$4,$5)",
+      "CALL public.crud_dentista_servicio($1,$2,$3,$4)",
       [
-        newValues.p_id_horario,
+        newValues.p_id_dentista_servicio,
         newValues.p_operacion,
-        newValues.p_hora,
-        newValues.p_fecha,
-        newValues.p_turno
+        newValues.p_dentista_id,
+        newValues.p_servicio_id
       ],
       (err, res) => {
         if (err) {
@@ -72,13 +71,12 @@ class HorarioServices {
   };
   updateById = (id, newValues, result) => {
     connection.query(
-      "CALL public.crud_horario($1,$2,$3,$4,$5)",
+      "CALL public.crud_dentista_servicio($1,$2,$3,$4)",
       [
         id,
         newValues.p_operacion,
-        newValues.p_hora,
-        newValues.p_fecha,
-        newValues.p_turno
+        newValues.p_dentista_id,
+        newValues.p_servicio_id
       ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -91,7 +89,7 @@ class HorarioServices {
   };
 
   remove = (id, result) => {
-    connection.query("CALL public.crud_horario($1,'DELETE','04:05	','2012-02-02','')", [id], (err, res) => {
+    connection.query("CALL public.crud_dentista_servicio($1,'DELETE',0,0)", [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -103,10 +101,10 @@ class HorarioServices {
         return;
       }
 
-      console.log("se eliminó el horario: ", id);
+      console.log("se eliminó el anuncio: ", id);
       result(null, res);
     });
   };
 
 }
-module.exports = HorarioServices;
+module.exports = DentistaServicioServices;
