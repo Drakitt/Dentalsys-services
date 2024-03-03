@@ -107,40 +107,19 @@ router.get('/one/:id', async (req, res) => {
   });
 })
 
-router.post('/nuevo', async (req, res) => {
+router.post('/', async (req, res) => {
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
   }
-  const values = {
-    p_operacion: 'INSERT',
-    p_id_persona: 0,
-    p_ci: req.body.ci,
-    p_direccion: req.body.direccion,
-    p_nombre: req.body.nombre,
-    p_apellidos: req.body.apellidos,
-    p_telefono: req.body.telefono,
-    p_celular: req.body.celular,
-    p_email: req.body.email
-  };
 
   const valuesn = {
     p_id_dentista: 0,
     p_operacion: 'INSERT',
     p_persona_id: req.body.persona_id
   };
-
-  serviceP.create(values, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Algo salió mal"
-      });
-    else {
-      valuesn.p_persona_id = data.id;
       service.create(valuesn, (erre, datae) => {
-        valuesn.p_persona_id = data.id;
         if (erre)
           res.status(500).send({
             message:
@@ -148,9 +127,7 @@ router.post('/nuevo', async (req, res) => {
           });
         else res.json({ status: 'ok', message: 'request succed', data: datae });
       });
-      // res.send(data)
-    };
-  });
+   
 })
 router.post('/', async (req, res) => {
   if (!req.body) {
