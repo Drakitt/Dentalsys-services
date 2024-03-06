@@ -56,7 +56,7 @@ class HorarioServices {
         newValues.p_id_horario,
         newValues.p_operacion,
         newValues.p_hora,
-        newValues.p_fecha,
+        newValues.p_dia,
         newValues.p_turno
       ],
       (err, res) => {
@@ -77,7 +77,7 @@ class HorarioServices {
         id,
         newValues.p_operacion,
         newValues.p_hora,
-        newValues.p_fecha,
+        newValues.p_dia,
         newValues.p_turno
       ], (err, res) => {
       if (err) {
@@ -91,7 +91,7 @@ class HorarioServices {
   };
 
   remove = (id, result) => {
-    connection.query("CALL public.crud_horario($1,'DELETE','04:05	','2012-02-02','')", [id], (err, res) => {
+    connection.query("CALL public.crud_horario($1,'DELETE','','','')", [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

@@ -63,8 +63,8 @@ router.post('/', async (req, res) => {
   const values = {
     p_id_horario: 0,
     p_operacion: 'INSERT',
-    p_horas: req.body.horas,
-    p_dias: req.body.dias,
+    p_hora: req.body.hora,
+    p_dia: req.body.dia,
     p_turno: req.body.turno
   };
 
@@ -93,8 +93,8 @@ router.patch('/:id', async (req, res) => {
   const values = {
     p_id_horario: req.body.id_horario,
     p_operacion: 'UPDATE',
-    p_horas: req.body.horas,
-    p_dias: req.body.dias,
+    p_hora: req.body.hora,
+    p_dia: req.body.dia,
     p_turno: req.body.turno
   };
 
