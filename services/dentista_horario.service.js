@@ -51,13 +51,12 @@ class DentistaHorarioServices {
 
   create = (newValues, result) => {
     connection.query(
-      "CALL public.crud_horario($1,$2,$3,$4,$5)",
+      "CALL public.crud_dentista_horario($1,$2,$3,$4)",
       [
-        newValues.p_id_horario,
+        newValues.p_id_dentista_horario,
         newValues.p_operacion,
-        newValues.p_hora,
-        newValues.p_fecha,
-        newValues.p_turno
+        newValues.p_dentista_id,
+        newValues.p_horario_id
       ],
       (err, res) => {
         if (err) {
@@ -72,13 +71,12 @@ class DentistaHorarioServices {
   };
   updateById = (id, newValues, result) => {
     connection.query(
-      "CALL public.crud_horario($1,$2,$3,$4,$5)",
+      "CALL public.crud_dentista_horario($1,$2,$3,$4)",
       [
         id,
         newValues.p_operacion,
-        newValues.p_hora,
-        newValues.p_fecha,
-        newValues.p_turno
+        newValues.p_dentista_id,
+        newValues.p_horario_id
       ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -91,7 +89,7 @@ class DentistaHorarioServices {
   };
 
   remove = (id, result) => {
-    connection.query("CALL public.crud_horario($1,'DELETE','04:05	','2012-02-02','')", [id], (err, res) => {
+    connection.query("CALL public.crud_dentista_horario($1,'DELETE','04:05	','2012-02-02','')", [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
