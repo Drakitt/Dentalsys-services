@@ -32,16 +32,18 @@ class HorarioServices {
   };
 
   GetOneById = (id, result) => {
-    connection.query(`SELECT * FROM horario WHERE id_horario = ${id}`, (err, res) => {
+    const quer= `SELECT * FROM horario WHERE id_horario = ${id}`
+
+    connection.query(quer, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
         return;
       }
-
-      if (res.length) {
-        console.log("devolver: ", res[0]);
-        result(null, res[0]);
+    
+      if (res) {
+        console.log("devolver: ", res);
+        result(null, res);
         return;
       }
 
