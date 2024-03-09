@@ -65,8 +65,8 @@ router.post('/', async (req, res) => {
     p_operacion: 'INSERT',  // Establece la operación CREATE para insertar una nueva cita
     p_razon: req.body.razon,
     p_detalles: req.body.detalles,
-    p_fecha: req.body.fecha_hora.split(' ')[0],  // Divide la fecha y la hora y toma la fecha
-    p_hora: req.body.fecha_hora.split(' ')[1],  // Divide la fecha y la hora y toma la hora
+    p_fecha: req.body.fecha,  // Divide la fecha y la hora y toma la fecha
+    p_hora: req.body.hora,  // Divide la fecha y la hora y toma la hora
     p_paciente_id: req.body.paciente_id,
     p_dentista_id: req.body.dentista_id
   };
@@ -98,8 +98,8 @@ router.patch('/:id', async (req, res) => {
     p_operacion: req.body.operacion,  // Establece la operación CREATE para insertar una nueva cita
     p_razon: req.body.razon,
     p_detalles: req.body.detalles,
-    p_fecha: req.body.fecha_hora.split(' ')[0],  // Divide la fecha y la hora y toma la fecha
-    p_hora: req.body.fecha_hora.split(' ')[1],  // Divide la fecha y la hora y toma la hora
+    p_fecha: req.body.fecha,  // Divide la fecha y la hora y toma la fecha
+    p_hora: req.body.hora,  // Divide la fecha y la hora y toma la hora
     p_paciente_id: req.body.paciente_id,
     p_dentista_id: req.body.dentista_id
   };

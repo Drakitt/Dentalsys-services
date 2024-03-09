@@ -53,7 +53,14 @@ class CitasServices {
     connection.query(
       "CALL public.crud_cita($1,$2,$3,$4,$5,$6,$7,$8)",
       [
-        ...newValues
+        newValues.p_cita_id,
+        newValues.p_operacion,
+        newValues.p_razon,
+        newValues.p_detalles,
+        newValues.p_fecha,
+        newValues.p_hora,
+        newValues.p_paciente_id,
+        newValues.p_dentista_id,
       ],
       (err, res) => {
         if (err) {
