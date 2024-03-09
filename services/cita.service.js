@@ -95,7 +95,7 @@ class CitasServices {
   };
 
   remove = (id, result) => {
-    connection.query("CALL public.crud_cita($1,'DELETE','','','','',0,0)", id, (err, res) => {
+    connection.query("CALL public.crud_cita($1,'DELETE','','','2024-03-03','9:00:00 BOT',0,0)", [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
