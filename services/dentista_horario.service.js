@@ -89,7 +89,7 @@ class DentistaHorarioServices {
   };
 
   remove = (id, result) => {
-    connection.query("CALL public.crud_dentista_horario($1,'DELETE','04:05	','2012-02-02','')", [id], (err, res) => {
+    connection.query("CALL public.crud_dentista_horario($1,'DELETE',0,0)", [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
