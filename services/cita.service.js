@@ -20,7 +20,7 @@ class CitasServices {
 
   findById = (id, result) => {
     console.log(id);
-    connection.query(`SELECT * FROM cita_v WHERE ci_paciente LIKE '%${id}%' OR celular_paciente LIKE '%${id}%'`, (err, res) => {
+    connection.query(`SELECT * FROM cita_v WHERE ci_paciente SIMILAR TO '%${id}%' OR celular_paciente SIMILAR TO '%${id}%'`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -32,16 +32,16 @@ class CitasServices {
   };
 
   GetOneById = (id, result) => {
-    connection.query(`SELECT * FROM citas_v WHERE id_cita = ${id}`, (err, res) => {
+    connection.query(`SELECT * FROM cita_v WHERE id_cita = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
         return;
       }
 
-      if (res.length) {
-        console.log("devolver: ", res[0]);
-        result(null, res[0]);
+      if (res?.rows?.length) {
+        console.log("devolver: ", res?.rows?.length);
+        result(null, res.rows[0]);
         return;
       }
 
@@ -53,7 +53,7 @@ class CitasServices {
     connection.query(
       "CALL public.crud_cita($1,$2,$3,$4,$5,$6,$7,$8)",
       [
-        newValues.p_cita_id,
+        newValues.p_id_cita,
         newValues.p_operacion,
         newValues.p_razon,
         newValues.p_detalles,
@@ -89,8 +89,8 @@ class CitasServices {
         result(err, null);
         return;
       }
-      console.log("valores ingresados: ", { id: res.insertId, ...newValues });
-      result(null, { id: res.insertId, ...newValues });
+      console.log("valores ingresados: ", { id: id, ...newValues });
+      result(null, { id: id, ...newValues });
     });
   };
 

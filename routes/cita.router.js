@@ -94,7 +94,7 @@ router.patch('/:id', async (req, res) => {
     });
   }
   const values = {
-    p_id_cita: req.body.id_cita,
+    p_id_cita: req.params.id,
     p_operacion: req.body.operacion,  // Establece la operación CREATE para insertar una nueva cita
     p_razon: req.body.razon,
     p_detalles: req.body.detalles,
