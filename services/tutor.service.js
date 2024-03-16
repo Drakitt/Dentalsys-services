@@ -95,7 +95,7 @@ class TutorServices {
         return;
       }
 
-      console.log("se eliminó el anuncio: ", id);
+      console.log("se eliminó : ", id);
       result(null, res);
     });
   };

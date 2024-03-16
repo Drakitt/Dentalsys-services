@@ -20,7 +20,7 @@ class CitasServices {
 
   findById = (id, result) => {
     console.log(id);
-    connection.query(`SELECT * FROM cita_v WHERE ci_paciente SIMILAR TO '%${id}%' OR celular_paciente SIMILAR TO '%${id}%'`, (err, res) => {
+    connection.query(`SELECT * FROM cita_v ci_paciente SIMILAR TO '%${id}%'`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -107,7 +107,7 @@ class CitasServices {
         return;
       }
 
-      console.log("se eliminó el anuncio: ", id);
+      console.log("se eliminó: ", id);
       result(null, res);
     });
   };
