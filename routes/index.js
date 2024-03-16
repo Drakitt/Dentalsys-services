@@ -14,6 +14,7 @@ const dentistaHorarioRouter = require('./dentista_horario.router');
 const dentistaServicioRouter = require('./dentista_servicio.router');
 const horarioRouter = require('./horario.router');
 const servicioRouter = require('./servicio.router');
+const dashboardRouter = require('./dashboard.router');
 
 const authServices = require('./../services/auth.service');
 const servicAuth = new authServices();
@@ -34,6 +35,7 @@ function routerApi(app) {
   router.use('/serviciodent',servicAuth.verificarToken, dentistaServicioRouter);
   router.use('/horario',servicAuth.verificarToken, horarioRouter);
   router.use('/horariodent',servicAuth.verificarToken, dentistaHorarioRouter);
+  router.use('/dashboard',servicAuth.verificarToken, dashboardRouter);
   router.use('/auth', authRouter);
 }
 
