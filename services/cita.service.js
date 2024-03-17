@@ -31,6 +31,40 @@ class CitasServices {
     });
   };
 
+  GetByMonth = (newValues, result) => {
+    connection.query(`SELECT * FROM cita_v WHERE DATE_PART('MONTH',fecha) IN ('${newValues.p_mes}') AND DATE_PART('YEAR',fecha) IN ('${newValues.p_año}') `, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      if (res?.rows?.length) {
+        console.log("devolver: ", res?.rows?.length);
+        result(null, res.rows[0]);
+        return;
+      }
+
+      result({ kind: "no se encontraron citas" });
+    });
+  };
+
+  GetByWeek = (newValues, result) => {
+    connection.query(`SELECT * FROM cita_v WHERE DATE_PART('week',fecha)- DATE_PART('week', DATE_TRUNC('month', fecha)) + 1 IN ('${newValues.p_semana}') AND DATE_PART('MONTH',fecha) IN ('${newValues.p_mes}') AND DATE_PART('YEAR',fecha) IN ('${newValues.p_año}')`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      if (res?.rows?.length) {
+        console.log("devolver: ", res?.rows?.length);
+        result(null, res.rows[0]);
+        return;
+      }
+
+      result({ kind: "no se encontraron citas" }, null);
+    });
+  };
+
   GetOneById = (id, result) => {
     connection.query(`SELECT * FROM cita_v WHERE id_cita = ${id}`, (err, res) => {
       if (err) {

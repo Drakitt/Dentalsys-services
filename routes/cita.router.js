@@ -115,6 +115,49 @@ router.patch('/:id', async (req, res) => {
 
 })
 
+router.post('/mes', async (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "No hay elementos"
+    });
+  }
+  const values = {
+    p_mes: req.body.mes,
+    p_año: req.body.año
+  };
+  service.GetByMonth(values, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "no se encontraron citas"
+      });
+    else res.send(data);
+  });
+
+})
+
+router.post('/semana', async (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "No hay elementos"
+    });
+  }
+  const values = {
+    p_semana: req.body.semana,
+    p_mes: req.body.mes,
+    p_año: req.body.año
+  };
+  service.GetByWeek(values, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "no se encontraron citas"
+      });
+    else res.send(data);
+  });
+
+})
+
 router.delete('/x/:id', async (req, res) => {
   service.remove(req.params.id, (err, data) => {
     if (err) {
