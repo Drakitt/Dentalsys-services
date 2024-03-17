@@ -61,14 +61,11 @@ router.post('/', async(req, res) =>{
   }
 
   const values = {
-    idpaciente: req.body.idpaciente,
-    ci: req.body.ci,
-    direccion: req.body.direccion,
-    nombre: req.body.nombre,
-    apellido_paterno: req.body.apellido_paterno,
-    apellido_materno: req.body.apellido_materno,
-    telefono_fijo: req.body.telefono_fijo,
-    whatsapp: req.body.whatsapp,
+    p_id_tutor: req.body.id_tutor,
+    p_operacion: req.body.operacion,
+    p_persona_id: req.body.persona_id,
+    p_id_usuario_reg: req.body.id_usuario_reg,
+    p_fecha_reg: new Date()
   };
 
   service.create(values, (err, data) => {
@@ -89,16 +86,11 @@ router.patch('/:id', async(req, res) =>{
   }
 
   const values = {
-    idpaciente: req.body.idpaciente,
-    ci: req.body.ci,
-    direccion: req.body.direccion,
-    nombre: req.body.nombre,
-    apellido_paterno: req.body.apellido_paterno,
-    apellido_materno: req.body.apellido_materno,
-    telefono_fijo: req.body.telefono_fijo,
-    whatsapp: req.body.whatsapp,
-    StatementType: req.body.StatementType,
-    idupdate: req.body.idupdate
+    p_id_tutor: req.params.id,
+    p_operacion: req.body.operacion,
+    p_persona_id: req.body.persona_id,
+    p_id_usuario_mod: req.body.id_usuario_mod,
+    p_fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {

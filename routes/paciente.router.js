@@ -74,7 +74,9 @@ router.post('/nuevo', async (req, res) => {
     p_ocupacion: req.body.ocupacion,
     p_tutor_id: req.body.tutor_id,
     p_sexo: req.body.sexo,
-    p_edad: req.body.edad
+    p_edad: req.body.edad,
+    p_id_usuario_reg: req.body.id_usuario_reg,
+    p_fecha_reg: new Date()
   };
   // service.create(values, (err, data) => {
   //   if (err)
@@ -131,7 +133,9 @@ router.patch('/:id', async (req, res) => {
     p_ocupacion: req.body.ocupacion,
     p_tutor_id: req.body.tutor_id,
     p_sexo: req.body.sexo,
-    p_edad: req.body.edad
+    p_edad: req.body.edad,
+    p_id_usuario_mod: req.body.id_usuario_mod,
+    p_fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {

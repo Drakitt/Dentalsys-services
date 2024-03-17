@@ -112,112 +112,6 @@ router.post('/insert', async (req, res) => {
     nro_hc: req.body.nro_hc,
     operacion: 'INSERT',
     paciente_id: req.body.paciente_id,
-    foto: req.body.foto,
-    nombre: req.body.nombre,
-    apellido_paterno: req.body.apellido_paterno,
-    apellido_materno: req.body.apellido_materno,
-    ci: req.body.ci,
-    edad: req.body.edad,
-    sexo: req.body.sexo,
-    lugar_nacimiento: req.body.lugar_nacimiento,
-    fecha_nacimiento: req.body.fecha_nacimiento,
-    ocupacion: req.body.ocupacion,
-    grado_educativo: req.body.grado_educativo,
-    estado_civil: req.body.estado_civil,
-    nacion_originaria: req.body.nacion_originaria,
-    idioma: req.body.idioma,
-    celular: req.body.celular,
-    telefono: req.body.telefono,
-    direccion: req.body.direccion,
-    municipio: req.body.municipio,
-    establecimiento: req.body.establecimiento,
-    red_salud: req.body.red_salud,
-    tutor_id: req.body.tutor_id || null,
-    antecedentes_familiares: req.body.antecedentes_familiares,
-    anemia: req.body.anemia,
-    asma: req.body.asma,
-    cardiopatias: req.body.cardiopatias,
-    diabetes_mel: req.body.diabetes_mel,
-    enf_gastricas: req.body.enf_gastricas,
-    epilepsia: req.body.epilepsia,
-    hepatitis: req.body.hepatitis,
-    hipertension: req.body.hipertension,
-    tuberculosis: req.body.tuberculosis,
-    vih: req.body.vih,
-    otros_atecedentes_personales: req.body.otros_atecedentes_personales,
-    alergias: req.body.alergias,
-    alergia_descripcion: req.body.alergia_descripcion,
-    embarazo: req.body.embarazo,
-    semanas_embarazo: req.body.semanas_embarazo,
-    hemorragia_extraccion: req.body.hemorragia_extraccion,
-    situacion_hemorragia: req.body.situacion_hemorragia,
-    atm: req.body.atm,
-    ganglios: req.body.ganglios,
-    respirador: req.body.respirador,
-    otros_examenes_extraorales: req.body.otros_examenes_extraorales,
-    labios: req.body.labios,
-    lengua: req.body.lengua,
-    paladar: req.body.paladar,
-    piso_boca: req.body.piso_boca,
-    mucosa: req.body.mucosa,
-    encias: req.body.encias,
-    protesis: req.body.protesis,
-    fecha: req.body.fecha,
-    habitos: req.body.habitos,
-    otros_habitos: req.body.otros_habitos,
-    cepillo: req.body.cepillo,
-    sangrado_encias: req.body.sangrado_encias,
-    hilo_dental: req.body.hilo_dental,
-    enjuague_bucal: req.body.enjuague_bucal,
-    frecuencia_cepillado: req.body.frecuencia_cepillado,
-    higiene_bucal: req.body.higiene_bucal,
-    observaciones: req.body.observaciones,
-    interconsulta: req.body.interconsulta
-  };
-
-  service.create(values, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Algo salió mal"
-      });
-    else res.json({ status: 'ok', message: 'request succed', data: data });
-  });
-});
-
-
-router.post('/prueba', async (req, res) => {
-  res.json({ status: 'ok', message: 'request succed' });
-  console.log("ver esto", req.body);
-});
-
-router.put('/:id', async (req, res) => {
-  if (!req.body) {
-    res.status(400).send({
-      message: "No hay elementos"
-    });
-  }
-  const values = {
-    nro_hc: req.body.nro_hc,
-    operacion: 'UPDATE',
-    paciente_id: req.body.paciente_id,
-    foto: req.body.foto,
-    nombre: req.body.nombre,
-    apellido_paterno: req.body.apellido_paterno,
-    apellido_materno: req.body.apellido_materno,
-    ci: req.body.ci,
-    edad: req.body.edad,
-    sexo: req.body.sexo,
-    lugar_nacimiento: req.body.lugar_nacimiento,
-    fecha_nacimiento: req.body.fecha_nacimiento,
-    ocupacion: req.body.ocupacion,
-    grado_educativo: req.body.grado_educativo,
-    estado_civil: req.body.estado_civil,
-    nacion_originaria: req.body.nacion_originaria,
-    idioma: req.body.idioma,
-    celular: req.body.celular,
-    telefono: req.body.telefono,
-    direccion: req.body.direccion,
     municipio: req.body.municipio,
     establecimiento: req.body.establecimiento,
     red_salud: req.body.red_salud,
@@ -262,7 +156,83 @@ router.put('/:id', async (req, res) => {
     higiene_bucal: req.body.higiene_bucal,
     observaciones: req.body.observaciones,
     interconsulta: req.body.interconsulta,
-    fecha_hc: req.body.fecha_hc || Date.now()
+    id_usuario_reg: req.body.id_usuario_reg,
+    fecha_reg: new Date()
+  };
+
+  service.create(values, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Algo salió mal"
+      });
+    else res.json({ status: 'ok', message: 'request succed', data: data });
+  });
+});
+
+
+router.post('/prueba', async (req, res) => {
+  res.json({ status: 'ok', message: 'request succed' });
+  console.log("ver esto", req.body);
+});
+
+router.put('/:id', async (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "No hay elementos"
+    });
+  }
+  const values = {
+    nro_hc: req.body.nro_hc,
+    operacion: 'UPDATE',
+    paciente_id: req.body.paciente_id,
+    municipio: req.body.municipio,
+    establecimiento: req.body.establecimiento,
+    red_salud: req.body.red_salud,
+    tutor_id: req.body.tutor_id || null,
+    antecedentes_familiares: req.body.antecedentes_familiares,
+    anemia: req.body.anemia,
+    asma: req.body.asma,
+    cardiopatias: req.body.cardiopatias,
+    diabetes_mel: req.body.diabetes_mel,
+    enf_gastricas: req.body.enf_gastricas,
+    epilepsia: req.body.epilepsia,
+    hepatitis: req.body.hepatitis,
+    hipertension: req.body.hipertension,
+    tuberculosis: req.body.tuberculosis,
+    vih: req.body.vih,
+    otros_atecedentes_personales: req.body.otros_atecedentes_personales,
+    alergias: req.body.alergias,
+    alergia_descripcion: req.body.alergia_descripcion,
+    embarazo: req.body.embarazo,
+    semanas_embarazo: req.body.semanas_embarazo,
+    hemorragia_extraccion: req.body.hemorragia_extraccion,
+    situacion_hemorragia: req.body.situacion_hemorragia,
+    atm: req.body.atm,
+    ganglios: req.body.ganglios,
+    respirador: req.body.respirador,
+    otros_examenes_extraorales: req.body.otros_examenes_extraorales,
+    labios: req.body.labios,
+    lengua: req.body.lengua,
+    paladar: req.body.paladar,
+    piso_boca: req.body.piso_boca,
+    mucosa: req.body.mucosa,
+    encias: req.body.encias,
+    protesis: req.body.protesis,
+    fecha: req.body.fecha,
+    habitos: req.body.habitos,
+    otros_habitos: req.body.otros_habitos,
+    cepillo: req.body.cepillo,
+    sangrado_encias: req.body.sangrado_encias,
+    hilo_dental: req.body.hilo_dental,
+    enjuague_bucal: req.body.enjuague_bucal,
+    frecuencia_cepillado: req.body.frecuencia_cepillado,
+    higiene_bucal: req.body.higiene_bucal,
+    observaciones: req.body.observaciones,
+    interconsulta: req.body.interconsulta,
+    fecha_hc: req.body.fecha_hc || Date.now(),
+    id_usuario_mod: req.body.id_usuario_mod,
+    fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {
@@ -286,23 +256,6 @@ router.patch('/update', async (req, res) => {
     nro_hc: req.body.nro_hc,
     operacion: 'UPDATE',
     paciente_id: req.body.paciente_id,
-    foto: req.body.foto,
-    nombre: req.body.nombre,
-    apellido_paterno: req.body.apellido_paterno,
-    apellido_materno: req.body.apellido_materno,
-    ci: req.body.ci,
-    edad: req.body.edad,
-    sexo: req.body.sexo,
-    lugar_nacimiento: req.body.lugar_nacimiento,
-    fecha_nacimiento: req.body.fecha_nacimiento,
-    ocupacion: req.body.ocupacion,
-    grado_educativo: req.body.grado_educativo,
-    estado_civil: req.body.estado_civil,
-    nacion_originaria: req.body.nacion_originaria,
-    idioma: req.body.idioma,
-    celular: req.body.celular,
-    telefono: req.body.telefono,
-    direccion: req.body.direccion,
     municipio: req.body.municipio,
     establecimiento: req.body.establecimiento,
     red_salud: req.body.red_salud,

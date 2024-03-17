@@ -85,7 +85,9 @@ class PersonaServices {
       newValues.p_telefono,
       newValues.p_celular,
       newValues.p_email,
-      newValues.p_foto
+      newValues.p_foto,
+      newValues.p_id_usuario_reg,
+      newValues.p_fecha_reg
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -110,7 +112,9 @@ class PersonaServices {
       newValues.p_telefono,
       newValues.p_celular,
       newValues.p_email,
-      newValues.p_foto
+      newValues.p_foto,
+      newValues.p_id_usuario_mod,
+      newValues.p_fecha_mod
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);

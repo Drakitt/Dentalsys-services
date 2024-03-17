@@ -95,6 +95,8 @@ class CitasServices {
         newValues.p_hora,
         newValues.p_paciente_id,
         newValues.p_dentista_id,
+        newValues.p_id_usuario_reg,
+        newValues.p_fecha_reg
       ],
       (err, res) => {
         if (err) {
@@ -117,6 +119,8 @@ class CitasServices {
         newValues.p_hora,
         newValues.p_paciente_id,
         newValues.p_dentista_id,
+        newValues.p_id_usuario_mod,
+        newValues.p_fecha_mod
       ], (err, res) => {
       if (err) {
         console.log("error: ", err);

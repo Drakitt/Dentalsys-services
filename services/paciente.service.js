@@ -21,7 +21,9 @@ class PacienteServices {
       newValues.p_ocupacion,
       newValues.p_tutor_id,
       newValues.p_sexo,
-      newValues.p_edad
+      newValues.p_edad,
+      newValues.p_id_usuario_reg,
+      newValues.p_fecha_reg
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -48,7 +50,9 @@ class PacienteServices {
       newValues.p_ocupacion,
       newValues.p_tutor_id,
       newValues.p_sexo,
-      newValues.p_edad
+      newValues.p_edad,
+      newValues.p_id_usuario_mod,
+      newValues.p_fecha_mod
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);

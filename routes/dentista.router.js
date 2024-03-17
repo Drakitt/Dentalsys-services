@@ -117,7 +117,9 @@ router.post('/', async (req, res) => {
   const valuesn = {
     p_id_dentista: 0,
     p_operacion: 'INSERT',
-    p_persona_id: req.body.persona_id
+    p_persona_id: req.body.persona_id,
+    p_id_usuario_reg: req.body.id_usuario_reg,
+    p_fecha_reg: new Date()
   };
       service.create(valuesn, (erre, datae) => {
         if (erre)
@@ -127,7 +129,7 @@ router.post('/', async (req, res) => {
           });
         else res.json({ status: 'ok', message: 'request succed', data: datae });
       });
-   
+
 })
 router.post('/', async (req, res) => {
   if (!req.body) {
@@ -165,7 +167,9 @@ router.patch('/:id', async (req, res) => {
   const values = {
     p_id_dentista: req.body.id_dentista,
     p_operacion: req.body.operacion,
-    p_persona_id: req.body.persona_id
+    p_persona_id: req.body.persona_id,
+    p_id_usuario_mod: req.body.id_usuario_mod,
+    p_fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {

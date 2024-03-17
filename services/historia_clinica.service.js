@@ -75,28 +75,11 @@ class HistoriaClinicaServices {
 
   create = (newValues, result) => {
     connection.query(
-      "CALL public.crud_historia_clinica_complete($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65)",
+      "CALL public.crud_historia_clinica_complete($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50)",
       [
         newValues.nro_hc,
         newValues.operacion,
         newValues.paciente_id,
-        newValues.foto,
-        newValues.nombre,
-        newValues.apellido_paterno,
-        newValues.apellido_materno,
-        newValues.ci,
-        newValues.edad,
-        newValues.sexo,
-        newValues.lugar_nacimiento,
-        newValues.fecha_nacimiento,
-        newValues.ocupacion,
-        newValues.grado_educativo,
-        newValues.estado_civil,
-        newValues.nacion_originaria,
-        newValues.idioma,
-        newValues.celular,
-        newValues.telefono,
-        newValues.direccion,
         newValues.municipio,
         newValues.establecimiento,
         newValues.red_salud,
@@ -141,7 +124,9 @@ class HistoriaClinicaServices {
         newValues.higiene_bucal,
         newValues.observaciones,
         newValues.interconsulta,
-        newValues.fecha_hc
+        newValues.fecha_hc,
+        newValues.id_usuario_reg,
+        newValues.fecha_reg
       ],
       (err, res) => {
         if (err) {
@@ -178,28 +163,11 @@ class HistoriaClinicaServices {
   };
   updateById = (id, newValues, result) => {
     connection.query(
-      "CALL public.crud_historia_clinica_complete($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50, $51, $52, $53, $54, $55, $56, $57, $58, $59, $60, $61, $62, $63, $64, $65)",
+      "CALL public.crud_historia_clinica_complete($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38, $39, $40, $41, $42, $43, $44, $45, $46, $47, $48, $49, $50)",
       [
         newValues.nro_hc,
         newValues.operacion,
         newValues.paciente_id,
-        newValues.foto,
-        newValues.nombre,
-        newValues.apellido_paterno,
-        newValues.apellido_materno,
-        newValues.ci,
-        newValues.edad,
-        newValues.sexo,
-        newValues.lugar_nacimiento,
-        newValues.fecha_nacimiento,
-        newValues.ocupacion,
-        newValues.grado_educativo,
-        newValues.estado_civil,
-        newValues.nacion_originaria,
-        newValues.idioma,
-        newValues.celular,
-        newValues.telefono,
-        newValues.direccion,
         newValues.municipio,
         newValues.establecimiento,
         newValues.red_salud,
@@ -244,7 +212,9 @@ class HistoriaClinicaServices {
         newValues.higiene_bucal,
         newValues.observaciones,
         newValues.interconsulta,
-        newValues.fecha_hc
+        newValues.fecha_hc,
+        newValues.id_usuario_mod,
+        newValues.fecha_mod
       ], (err, res) => {
         if (err) {
           console.log("error: ", err);

@@ -102,6 +102,8 @@ class DentistaServices {
       newValues.p_id_dentista,
       newValues.p_operacion,
       newValues.p_persona_id,
+      newValues.p_id_usuario_reg,
+      newValues.p_fecha_reg
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -119,6 +121,8 @@ class DentistaServices {
       id,
       newValues.p_operacion,
       newValues.p_persona_id,
+      newValues.p_id_usuario_mod,
+      newValues.p_fecha_mod
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);

@@ -53,7 +53,9 @@ class TutorServices {
     connection.query("CALL public.crud_tutor($1,$2,$3)", [
       newValues.p_id_tutor,
       newValues.p_operacion,
-      newValues.p_persona_id
+      newValues.p_persona_id,
+      newValues.p_id_usuario_reg,
+      newValues.p_fecha_reg
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -70,7 +72,9 @@ class TutorServices {
     connection.query("CALL public.crud_tutor($1,$2,$3)", [
       id,
       newValues.p_operacion,
-      newValues.p_persona_id
+      newValues.p_persona_id,
+      newValues.p_id_usuario_mod,
+      newValues.p_fecha_mod
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);

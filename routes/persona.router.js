@@ -71,7 +71,9 @@ router.post('/', async (req, res) => {
     p_telefono: req.body.telefono,
     p_celular: req.body.celular,
     p_email: req.body.email,
-    p_foto: req.body.foto
+    p_foto: req.body.foto,
+    p_id_usuario_reg: req.body.id_usuario_reg,
+    p_fecha_reg: new Date()
   };
 
 
@@ -103,7 +105,9 @@ router.patch('/:id', async (req, res) => {
     p_telefono: req.body.telefono,
     p_celular: req.body.celular,
     p_email: req.body.email,
-    p_foto: req.body.foto
+    p_foto: req.body.foto,
+    p_id_usuario_mod: req.body.id_usuario_mod,
+    p_fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {

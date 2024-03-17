@@ -68,7 +68,9 @@ router.post('/', async (req, res) => {
     p_fecha: req.body.fecha,  // Divide la fecha y la hora y toma la fecha
     p_hora: req.body.hora,  // Divide la fecha y la hora y toma la hora
     p_paciente_id: req.body.paciente_id,
-    p_dentista_id: req.body.dentista_id
+    p_dentista_id: req.body.dentista_id,
+    p_id_usuario_reg: req.body.id_usuario_reg,
+    p_fecha_reg: new Date()
   };
 
   service.create(values, (err, data) => {
@@ -101,7 +103,9 @@ router.patch('/:id', async (req, res) => {
     p_fecha: req.body.fecha,  // Divide la fecha y la hora y toma la fecha
     p_hora: req.body.hora,  // Divide la fecha y la hora y toma la hora
     p_paciente_id: req.body.paciente_id,
-    p_dentista_id: req.body.dentista_id
+    p_dentista_id: req.body.dentista_id,
+    p_id_usuario_mod: req.body.id_usuario_mod,
+    p_fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {
