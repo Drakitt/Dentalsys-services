@@ -39,9 +39,9 @@ class ServicioServices {
         return;
       }
 
-      if (res.length) {
-        console.log("devolver: ", res[0]);
-        result(null, res[0]);
+      if (res) {
+        console.log("devolver: ", res);
+        result(null, res);
         return;
       }
 

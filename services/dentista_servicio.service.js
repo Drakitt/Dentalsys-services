@@ -39,12 +39,13 @@ class DentistaServicioServices {
         return;
       }
 
-      if (res.length) {
-        console.log("devolver: ", res[0]);
-        result(null, res[0]);
+      if (res) {
+        
+        
+        result(null, res);
         return;
       }
-
+      console.log("devolver: ", res);
       result({ kind: "no se encontró el id" }, null);
     });
   };

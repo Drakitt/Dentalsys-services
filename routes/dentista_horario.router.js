@@ -63,8 +63,8 @@ router.post('/', async (req, res) => {
   const values = {
     p_id_dentista_horario: 0,
     p_operacion: 'INSERT',
-    p_dentista_id: req.body.dentista_id,
-    p_horario_id: req.body.horario_id
+    p_dentista_id: req.body.p_dentista_id,
+    p_horario_id: req.body.p_horario_id
   };
 
   service.create(values, (err, data) => {
