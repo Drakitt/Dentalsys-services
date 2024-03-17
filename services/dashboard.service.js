@@ -1,22 +1,82 @@
 const faker = require('faker');
 const connection = require('../database/database');
-class CitasServices {
+class DashboardServices {
 
   constructor() {
-    this.citas = [];
+    this.dashboard = [];
   }
 
-  getAll = result => {
-    connection.query("SELECT * FROM cita_v", (err, res) => {
+  estadoCita = result => {
+    connection.query("SELECT COUNT(id_cita), activo FROM cita GROUP BY activo;", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
         return;
       }
-      console.log("citas: ", res?.rows?.length);
+      console.log("dashboard: ", res?.rows?.length);
       result(null, res);
     });
   };
+
+  estadoDentista= result => {
+    connection.query("SELECT COUNT(id_dentista), activo FROM dentista GROUP BY activo;SELECT COUNT(id_dentista), activo FROM dentista GROUP BY activo;", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("dashboard: ", res?.rows?.length);
+      result(null, res);
+    });
+  };
+
+  estadoDentista= result => {
+    connection.query("SELECT COUNT(id_dentista), activo FROM dentista GROUP BY activo;SELECT COUNT(id_dentista), activo FROM dentista GROUP BY activo;", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("dashboard: ", res?.rows?.length);
+      result(null, res);
+    });
+  };
+
+  estadoPaciente= result => {
+    connection.query("SELECT COUNT(id_paciente), activo FROM paciente GROUP BY activo;", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("dashboard: ", res?.rows?.length);
+      result(null, res);
+    });
+  };
+
+  estadoTratamiento= result => {
+    connection.query("SELECT COUNT(id_tratamiento), activo FROM tratamiento GROUP BY activo;", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("dashboard: ", res?.rows?.length);
+      result(null, res);
+    });
+  };
+
+  // estadoPaciente= result => {
+  //   connection.query("", (err, res) => {
+  //     if (err) {
+  //       console.log("error: ", err);
+  //       result(null, err);
+  //       return;
+  //     }
+  //     console.log("dashboard: ", res?.rows?.length);
+  //     result(null, res);
+  //   });
+  // };
 
   findById = (id, result) => {
     console.log(id);
@@ -26,42 +86,8 @@ class CitasServices {
         result(null, err);
         return;
       }
-      console.log("citas: ", res?.rows?.length);
+      console.log("dashboard: ", res?.rows?.length);
       result(null, res);
-    });
-  };
-
-  GetByMonth = (newValues, result) => {
-    connection.query(`SELECT * FROM cita_v WHERE DATE_PART('MONTH',fecha) IN ('${newValues.p_mes}') AND DATE_PART('YEAR',fecha) IN ('${newValues.p_año}') `, (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return;
-      }
-      if (res?.rows?.length) {
-        console.log("devolver: ", res?.rows?.length);
-        result(null, res.rows[0]);
-        return;
-      }
-
-      result({ kind: "no se encontraron citas" });
-    });
-  };
-
-  GetByWeek = (newValues, result) => {
-    connection.query(`SELECT * FROM cita_v WHERE DATE_PART('week',fecha)- DATE_PART('week', DATE_TRUNC('month', fecha)) + 1 IN ('${newValues.p_semana}') AND DATE_PART('MONTH',fecha) IN ('${newValues.p_mes}') AND DATE_PART('YEAR',fecha) IN ('${newValues.p_año}')`, (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return;
-      }
-      if (res?.rows?.length) {
-        console.log("devolver: ", res?.rows?.length);
-        result(null, res.rows[0]);
-        return;
-      }
-
-      result({ kind: "no se encontraron citas" }, null);
     });
   };
 
@@ -147,4 +173,4 @@ class CitasServices {
   };
 
 }
-module.exports = CitasServices;
+module.exports = DashboardServices;

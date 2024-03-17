@@ -102,7 +102,7 @@ class DentistaServicioServices {
         return;
       }
 
-      console.log("se eliminó el anuncio: ", id);
+      console.log("se eliminó : ", id);
       result(null, res);
     });
   };

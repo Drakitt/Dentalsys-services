@@ -94,7 +94,7 @@ router.patch('/:id', async (req, res) => {
     });
   }
   const values = {
-    p_id_cita: req.body.id_cita,
+    p_id_cita: req.params.id,
     p_operacion: req.body.operacion,  // Establece la operación CREATE para insertar una nueva cita
     p_razon: req.body.razon,
     p_detalles: req.body.detalles,
@@ -109,6 +109,49 @@ router.patch('/:id', async (req, res) => {
       res.status(500).send({
         message:
           err.message || "Algo salió mal"
+      });
+    else res.send(data);
+  });
+
+})
+
+router.post('/mes', async (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "No hay elementos"
+    });
+  }
+  const values = {
+    p_mes: req.body.mes,
+    p_año: req.body.año
+  };
+  service.GetByMonth(values, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "no se encontraron citas"
+      });
+    else res.send(data);
+  });
+
+})
+
+router.post('/semana', async (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "No hay elementos"
+    });
+  }
+  const values = {
+    p_semana: req.body.semana,
+    p_mes: req.body.mes,
+    p_año: req.body.año
+  };
+  service.GetByWeek(values, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "no se encontraron citas"
       });
     else res.send(data);
   });
