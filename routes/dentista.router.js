@@ -113,12 +113,13 @@ router.post('/', async (req, res) => {
       message: "Content can not be empty!"
     });
   }
+  const idusuario = req.usuario.id;
 
   const valuesn = {
     p_id_dentista: 0,
     p_operacion: 'INSERT',
     p_persona_id: req.body.persona_id,
-    p_id_usuario_reg: req.body.id_usuario_reg,
+    p_id_usuario_reg: idusuario,
     p_fecha_reg: new Date()
   };
       service.create(valuesn, (erre, datae) => {
@@ -131,31 +132,6 @@ router.post('/', async (req, res) => {
       });
 
 })
-router.post('/', async (req, res) => {
-  if (!req.body) {
-    res.status(400).send({
-      message: "Content can not be empty!"
-    });
-  }
-
-  const valuesn = {
-    p_id_dentista: 0,
-    p_operacion: 'INSERT',
-    p_persona_id: req.body.persona_id
-  };
-
-
-  service.create(values, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Algo salió mal"
-      });
-    else {
-      res.send(data)
-    };
-  });
-})
 
 router.patch('/:id', async (req, res) => {
   if (!req.body) {
@@ -163,12 +139,13 @@ router.patch('/:id', async (req, res) => {
       message: "No hay elementos"
     });
   }
+  const idusuario = req.usuario.id;
 
   const values = {
     p_id_dentista: req.body.id_dentista,
     p_operacion: req.body.operacion,
     p_persona_id: req.body.persona_id,
-    p_id_usuario_mod: req.body.id_usuario_mod,
+    p_id_usuario_mod: idusuario,
     p_fecha_mod: new Date()
   };
 
@@ -184,7 +161,8 @@ router.patch('/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  service.remove(req.params.id, (err, data) => {
+  const idusuario = req.usuario.id;
+  service.remove(req.params.id, idusuario, new Date(), (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

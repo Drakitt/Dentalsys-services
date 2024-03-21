@@ -226,8 +226,8 @@ class HistoriaClinicaServices {
       });
   };
 
-  remove = (id, result) => {
-    connection.query("CALL public.crud_cita($1,'DELETE','','','',0)", id, (err, res) => {
+  remove = (id,idusuario,fecha, result) => {
+    connection.query(`CALL public.crud_cita($1,'DELETE','','','',${idusuario},'${fecha}')`, id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

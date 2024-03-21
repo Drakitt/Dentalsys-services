@@ -107,6 +107,7 @@ router.post('/insert', async (req, res) => {
       message: "Content can not be empty!"
     });
   }
+  const idusuario = req.usuario.id;
 
   const values = {
     nro_hc: req.body.nro_hc,
@@ -156,7 +157,8 @@ router.post('/insert', async (req, res) => {
     higiene_bucal: req.body.higiene_bucal,
     observaciones: req.body.observaciones,
     interconsulta: req.body.interconsulta,
-    id_usuario_reg: req.body.id_usuario_reg,
+    fecha_hc: req.body.fecha_hc || new Date(),
+    id_usuario_reg: idusuario,
     fecha_reg: new Date()
   };
 
@@ -182,6 +184,7 @@ router.put('/:id', async (req, res) => {
       message: "No hay elementos"
     });
   }
+  const idusuario = req.usuario.id;
   const values = {
     nro_hc: req.body.nro_hc,
     operacion: 'UPDATE',
@@ -230,8 +233,8 @@ router.put('/:id', async (req, res) => {
     higiene_bucal: req.body.higiene_bucal,
     observaciones: req.body.observaciones,
     interconsulta: req.body.interconsulta,
-    fecha_hc: req.body.fecha_hc || Date.now(),
-    id_usuario_mod: req.body.id_usuario_mod,
+    fecha_hc: req.body.fecha_hc || new Date(),
+    id_usuario_mod: idusuario,
     fecha_mod: new Date()
   };
 
@@ -300,7 +303,7 @@ router.patch('/update', async (req, res) => {
     higiene_bucal: req.body.higiene_bucal,
     observaciones: req.body.observaciones,
     interconsulta: req.body.interconsulta,
-    fecha_hc: req.body.fecha_hc || Date.now()
+    fecha_hc: req.body.fecha_hc || new Date()
   };
 
   service.updateById(req.body.nro_hc, values, (err, data) => {
@@ -331,7 +334,9 @@ router.delete('/x/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  service.remove(req.params.id, (err, data) => {
+
+  const idusuario = req.usuario.id;
+  service.remove(req.params.id, idusuario, new Date(),(err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

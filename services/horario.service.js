@@ -40,7 +40,7 @@ class HorarioServices {
         result(err, null);
         return;
       }
-    
+
       if (res) {
         console.log("devolver: ", res);
         result(null, res);
@@ -53,13 +53,15 @@ class HorarioServices {
 
   create = (newValues, result) => {
     connection.query(
-      "CALL public.crud_horario($1,$2,$3,$4,$5)",
+      "CALL public.crud_horario($1,$2,$3,$4,$5,$6,$7)",
       [
         newValues.p_id_horario,
         newValues.p_operacion,
         newValues.p_hora,
         newValues.p_dia,
-        newValues.p_turno
+        newValues.p_turno,
+        newValues.p_id_usuario_reg,
+        newValues.p_fecha_reg
       ],
       (err, res) => {
         if (err) {
@@ -74,13 +76,15 @@ class HorarioServices {
   };
   updateById = (id, newValues, result) => {
     connection.query(
-      "CALL public.crud_horario($1,$2,$3,$4,$5)",
+      "CALL public.crud_horario($1,$2,$3,$4,$5,$6,$7)",
       [
         id,
         newValues.p_operacion,
         newValues.p_hora,
         newValues.p_dia,
-        newValues.p_turno
+        newValues.p_turno,
+        newValues.p_id_usuario_mod,
+        newValues.p_fecha_mod
       ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -92,8 +96,8 @@ class HorarioServices {
     });
   };
 
-  remove = (id, result) => {
-    connection.query("CALL public.crud_horario($1,'DELETE','','','')", [id], (err, res) => {
+  remove = (id,idusuario,fecha, result) => {
+    connection.query(`CALL public.crud_horario($1,'DELETE','','','',${idusuario}, '${fecha}')`, [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

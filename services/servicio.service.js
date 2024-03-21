@@ -51,13 +51,15 @@ class ServicioServices {
 
   create = (newValues, result) => {
     connection.query(
-      "CALL public.crud_servicio($1,$2,$3,$4,$5)",
+      "CALL public.crud_servicio($1,$2,$3,$4,$5,$6,$7)",
       [
         newValues.p_id_servicio,
         newValues.p_operacion,
         newValues.p_tipo,
         newValues.p_detalles,
-        newValues.p_costo
+        newValues.p_costo,
+        newValues.p_id_usuario_reg,
+        newValues.p_fecha_reg
       ],
       (err, res) => {
         if (err) {
@@ -72,13 +74,15 @@ class ServicioServices {
   };
   updateById = (id, newValues, result) => {
     connection.query(
-      "CALL public.crud_servicio($1,$2,$3,$4,$5)",
+      "CALL public.crud_servicio($1,$2,$3,$4,$5,$6,$7)",
       [
         id,
         newValues.p_operacion,
         newValues.p_tipo,
         newValues.p_detalles,
-        newValues.p_costo
+        newValues.p_costo,
+        newValues.p_id_usuario_mod,
+        newValues.p_fecha_mod
       ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -90,8 +94,8 @@ class ServicioServices {
     });
   };
 
-  remove = (id, result) => {
-    connection.query("CALL public.crud_servicio($1,'DELETE','','',0)", [id], (err, res) => {
+  remove = (id,idusuario,fecha, result) => {
+    connection.query(`CALL public.crud_servicio($1,'DELETE','','',0,${idusuario},'${fecha}')`, [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

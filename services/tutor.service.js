@@ -50,7 +50,7 @@ class TutorServices {
 
 
   create = (newValues, result) => {
-    connection.query("CALL public.crud_tutor($1,$2,$3)", [
+    connection.query("CALL public.crud_tutor($1,$2,$3,$4,$5)", [
       newValues.p_id_tutor,
       newValues.p_operacion,
       newValues.p_persona_id,
@@ -69,7 +69,7 @@ class TutorServices {
   };
 
   updateById = (id, newValues, result) => {
-    connection.query("CALL public.crud_tutor($1,$2,$3)", [
+    connection.query("CALL public.crud_tutor($1,$2,$3,$4,$5)", [
       id,
       newValues.p_operacion,
       newValues.p_persona_id,
@@ -86,8 +86,8 @@ class TutorServices {
     });
   };
 
-  remove = (id, result) => {
-    connection.query("CALL dentalsys.crud_tutor($1,'DELETE',0)", id, (err, res) => {
+  remove = (id,idusuario,fecha, result) => {
+    connection.query(`CALL dentalsys.crud_tutor($1,'DELETE',0,${idusuario},'${fecha}')`, id, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

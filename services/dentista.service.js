@@ -97,7 +97,7 @@ class DentistaServices {
 
 
   create = (newValues, result) => {
-    connection.query("CALL public.crud_dentista($1,$2,$3)",
+    connection.query("CALL public.crud_dentista($1,$2,$3,$4,$5)",
     [
       newValues.p_id_dentista,
       newValues.p_operacion,
@@ -116,7 +116,7 @@ class DentistaServices {
   };
 
   updateById = (id, newValues, result) => {
-    connection.query("CALL dentalsys.crud_dentista($1,$2,$3)",
+    connection.query("CALL dentalsys.crud_dentista($1,$2,$3,$4,$5)",
     [
       id,
       newValues.p_operacion,
@@ -135,8 +135,8 @@ class DentistaServices {
   };
 
 
-  remove = (id, result) => {
-    connection.query("CALL crud_dentista($1,'DELETE', 0)", [id], (err, res) => {
+  remove = (id,idusuario,fecha, result) => {
+    connection.query(`CALL crud_dentista($1,'DELETE', 0,${idusuario},'${fecha}')`, [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

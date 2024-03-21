@@ -59,13 +59,16 @@ router.post('/', async (req, res) => {
       message: "Content can not be empty!"
     });
   }
+  const idusuario = req.usuario.id;
 
   const values = {
     p_id_horario: 0,
     p_operacion: 'INSERT',
     p_hora: req.body.hora,
     p_dia: req.body.dia,
-    p_turno: req.body.turno
+    p_turno: req.body.turno,
+    p_id_usuario_reg: idusuario,
+    p_fecha_reg: new Date()
   };
 
   service.create(values, (err, data) => {
@@ -90,12 +93,15 @@ router.patch('/:id', async (req, res) => {
       message: "No hay elementos"
     });
   }
+  const idusuario = req.usuario.id;
   const values = {
     p_id_horario: req.body.id_horario,
     p_operacion: 'UPDATE',
     p_hora: req.body.hora,
     p_dia: req.body.dia,
-    p_turno: req.body.turno
+    p_turno: req.body.turno,
+    p_id_usuario_mod: idusuario,
+    p_fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {
@@ -126,7 +132,8 @@ router.delete('/x/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  service.remove(req.params.id, (err, data) => {
+  const idusuario = req.usuario.id;
+  service.remove(req.params.id, idusuario, new Date(), (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

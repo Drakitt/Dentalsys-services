@@ -85,7 +85,7 @@ class CitasServices {
 
   create = (newValues, result) => {
     connection.query(
-      "CALL public.crud_cita($1,$2,$3,$4,$5,$6,$7,$8)",
+      "CALL public.crud_cita($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
       [
         newValues.p_id_cita,
         newValues.p_operacion,
@@ -110,7 +110,7 @@ class CitasServices {
     );
   };
   updateById = (id, newValues, result) => {
-    connection.query("CALL public.crud_cita($1,$2,$3,$4,$5,$6,$7,$8)", [
+    connection.query("CALL public.crud_cita($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)", [
         id,
         newValues.p_operacion,
         newValues.p_razon,
@@ -132,8 +132,8 @@ class CitasServices {
     });
   };
 
-  remove = (id, result) => {
-    connection.query("CALL public.crud_cita($1,'DELETE','','','2024-03-03','9:00:00 BOT',0,0)", [id], (err, res) => {
+  remove = (id,idusuario,fecha, result) => {
+    connection.query(`CALL public.crud_cita($1,'DELETE','','','2024-03-03','9:00:00 BOT',0,0,${idusuario},'${fecha}')`, [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
