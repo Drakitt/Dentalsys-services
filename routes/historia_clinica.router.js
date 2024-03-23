@@ -186,7 +186,7 @@ router.put('/:id', async (req, res) => {
   }
   const idusuario = req.usuario.id;
   const values = {
-    nro_hc: req.body.nro_hc,
+    nro_hc: req.params.id,
     operacion: 'UPDATE',
     paciente_id: req.body.paciente_id,
     municipio: req.body.municipio,
@@ -306,7 +306,7 @@ router.patch('/update', async (req, res) => {
     fecha_hc: req.body.fecha_hc || new Date()
   };
 
-  service.updateById(req.body.nro_hc, values, (err, data) => {
+  service.updateById(req.params.id, values, (err, data) => {
     if (err)
       res.status(500).send({
         message:
