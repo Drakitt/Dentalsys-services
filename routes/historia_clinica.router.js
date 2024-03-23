@@ -107,28 +107,12 @@ router.post('/insert', async (req, res) => {
       message: "Content can not be empty!"
     });
   }
+  const idusuario = req.usuario.id;
 
   const values = {
     nro_hc: req.body.nro_hc,
     operacion: 'INSERT',
     paciente_id: req.body.paciente_id,
-    foto: req.body.foto,
-    nombre: req.body.nombre,
-    apellido_paterno: req.body.apellido_paterno,
-    apellido_materno: req.body.apellido_materno,
-    ci: req.body.ci,
-    edad: req.body.edad,
-    sexo: req.body.sexo,
-    lugar_nacimiento: req.body.lugar_nacimiento,
-    fecha_nacimiento: req.body.fecha_nacimiento,
-    ocupacion: req.body.ocupacion,
-    grado_educativo: req.body.grado_educativo,
-    estado_civil: req.body.estado_civil,
-    nacion_originaria: req.body.nacion_originaria,
-    idioma: req.body.idioma,
-    celular: req.body.celular,
-    telefono: req.body.telefono,
-    direccion: req.body.direccion,
     municipio: req.body.municipio,
     establecimiento: req.body.establecimiento,
     red_salud: req.body.red_salud,
@@ -172,7 +156,10 @@ router.post('/insert', async (req, res) => {
     frecuencia_cepillado: req.body.frecuencia_cepillado,
     higiene_bucal: req.body.higiene_bucal,
     observaciones: req.body.observaciones,
-    interconsulta: req.body.interconsulta
+    interconsulta: req.body.interconsulta,
+    fecha_hc: req.body.fecha_hc || new Date(),
+    id_usuario_reg: idusuario,
+    fecha_reg: new Date()
   };
 
   service.create(values, (err, data) => {
@@ -197,27 +184,11 @@ router.put('/:id', async (req, res) => {
       message: "No hay elementos"
     });
   }
+  const idusuario = req.usuario.id;
   const values = {
     nro_hc: req.body.nro_hc,
     operacion: 'UPDATE',
     paciente_id: req.body.paciente_id,
-    foto: req.body.foto,
-    nombre: req.body.nombre,
-    apellido_paterno: req.body.apellido_paterno,
-    apellido_materno: req.body.apellido_materno,
-    ci: req.body.ci,
-    edad: req.body.edad,
-    sexo: req.body.sexo,
-    lugar_nacimiento: req.body.lugar_nacimiento,
-    fecha_nacimiento: req.body.fecha_nacimiento,
-    ocupacion: req.body.ocupacion,
-    grado_educativo: req.body.grado_educativo,
-    estado_civil: req.body.estado_civil,
-    nacion_originaria: req.body.nacion_originaria,
-    idioma: req.body.idioma,
-    celular: req.body.celular,
-    telefono: req.body.telefono,
-    direccion: req.body.direccion,
     municipio: req.body.municipio,
     establecimiento: req.body.establecimiento,
     red_salud: req.body.red_salud,
@@ -262,7 +233,9 @@ router.put('/:id', async (req, res) => {
     higiene_bucal: req.body.higiene_bucal,
     observaciones: req.body.observaciones,
     interconsulta: req.body.interconsulta,
-    fecha_hc: req.body.fecha_hc || Date.now()
+    fecha_hc: req.body.fecha_hc || new Date(),
+    id_usuario_mod: idusuario,
+    fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {
@@ -286,23 +259,6 @@ router.patch('/update', async (req, res) => {
     nro_hc: req.body.nro_hc,
     operacion: 'UPDATE',
     paciente_id: req.body.paciente_id,
-    foto: req.body.foto,
-    nombre: req.body.nombre,
-    apellido_paterno: req.body.apellido_paterno,
-    apellido_materno: req.body.apellido_materno,
-    ci: req.body.ci,
-    edad: req.body.edad,
-    sexo: req.body.sexo,
-    lugar_nacimiento: req.body.lugar_nacimiento,
-    fecha_nacimiento: req.body.fecha_nacimiento,
-    ocupacion: req.body.ocupacion,
-    grado_educativo: req.body.grado_educativo,
-    estado_civil: req.body.estado_civil,
-    nacion_originaria: req.body.nacion_originaria,
-    idioma: req.body.idioma,
-    celular: req.body.celular,
-    telefono: req.body.telefono,
-    direccion: req.body.direccion,
     municipio: req.body.municipio,
     establecimiento: req.body.establecimiento,
     red_salud: req.body.red_salud,
@@ -347,7 +303,7 @@ router.patch('/update', async (req, res) => {
     higiene_bucal: req.body.higiene_bucal,
     observaciones: req.body.observaciones,
     interconsulta: req.body.interconsulta,
-    fecha_hc: req.body.fecha_hc || Date.now()
+    fecha_hc: req.body.fecha_hc || new Date()
   };
 
   service.updateById(req.body.nro_hc, values, (err, data) => {
@@ -378,7 +334,9 @@ router.delete('/x/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  service.remove(req.params.id, (err, data) => {
+
+  const idusuario = req.usuario.id;
+  service.remove(req.params.id, idusuario, new Date(),(err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

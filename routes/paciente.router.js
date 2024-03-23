@@ -17,6 +17,7 @@ router.post('/', async (req, res) => {
       message: "Content can not be empty!"
     });
   }
+  const idusuario = req.usuario.id;
 
   let values = {
     p_id_paciente: 0,
@@ -31,7 +32,9 @@ router.post('/', async (req, res) => {
     p_ocupacion: req.body.ocupacion,
     p_tutor_id: req.body.tutor_id,
     p_sexo: req.body.sexo,
-    p_edad: req.body.edad
+    p_edad: req.body.edad,
+    p_id_usuario_reg: idusuario,
+    p_fecha_reg: new Date()
   };
   service.create(values, (err, data) => {
     if (err)
@@ -74,7 +77,9 @@ router.post('/nuevo', async (req, res) => {
     p_ocupacion: req.body.ocupacion,
     p_tutor_id: req.body.tutor_id,
     p_sexo: req.body.sexo,
-    p_edad: req.body.edad
+    p_edad: req.body.edad,
+    p_id_usuario_reg: req.body.id_usuario_reg,
+    p_fecha_reg: new Date()
   };
   // service.create(values, (err, data) => {
   //   if (err)
@@ -118,6 +123,7 @@ router.patch('/:id', async (req, res) => {
       message: "No hay elementos"
     });
   }
+  const idusuario = req.usuario.id;
   const values = {
     p_id_paciente: req.body.id_paciente,
     p_operacion: req.body.operacion,
@@ -131,7 +137,9 @@ router.patch('/:id', async (req, res) => {
     p_ocupacion: req.body.ocupacion,
     p_tutor_id: req.body.tutor_id,
     p_sexo: req.body.sexo,
-    p_edad: req.body.edad
+    p_edad: req.body.edad,
+    p_id_usuario_mod: idusuario,
+    p_fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {
@@ -226,7 +234,8 @@ router.get('/one/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  service.remove(req.params.id, (err, data) => {
+  const idusuario = req.usuario.id;
+  service.remove(req.params.id, idusuario, new Date(), (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

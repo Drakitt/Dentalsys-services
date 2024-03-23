@@ -6,29 +6,6 @@ class PersonaServices {
     this.persona = [];
   }
 
-  create = (newValues, result) => {
-    connection.query("CALL public.crud_cita(?,?,?,?,?,?,?,?,?)", [
-      newValues.p_operacion,
-      newValues.p_id_persona,
-      newValues.p_ci,
-      newValues.p_direccion,
-      newValues.p_nombre,
-      newValues.p_apellido_paterno,
-      newValues.p_apellido_materno,
-      newValues.p_telefono,
-      newValues.p_celular,
-      newValues.p_email
-    ], (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return;
-      }
-      console.log("valores ingresados: ", { id: res.insertId, ...newValues });
-      result(null, { id: res.insertId, ...newValues });
-    });
-  };
-
 
   getAll = result => {
     connection.query("SELECT * FROM pacientes_contacto_v", (err, res) => {
@@ -74,7 +51,7 @@ class PersonaServices {
 
 
   create = (newValues, result) => {
-    return(connection.query("CALL public.crud_persona($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)", [
+    return(connection.query("CALL public.crud_persona($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)", [
       newValues.p_operacion,
       newValues.p_id_persona,
       newValues.p_ci,
@@ -85,7 +62,9 @@ class PersonaServices {
       newValues.p_telefono,
       newValues.p_celular,
       newValues.p_email,
-      newValues.p_foto
+      newValues.p_foto,
+      newValues.p_id_usuario_reg,
+      newValues.p_fecha_reg
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -99,7 +78,7 @@ class PersonaServices {
   };
 
   updateById = (id, newValues, result) => {
-    connection.query("CALL public.crud_persona($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)", [
+    connection.query("CALL public.crud_persona($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)", [
       newValues.p_operacion,
       id,
       newValues.p_ci,
@@ -110,7 +89,9 @@ class PersonaServices {
       newValues.p_telefono,
       newValues.p_celular,
       newValues.p_email,
-      newValues.p_foto
+      newValues.p_foto,
+      newValues.p_id_usuario_mod,
+      newValues.p_fecha_mod
     ], (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -123,8 +104,8 @@ class PersonaServices {
   };
 
 
-  remove = (id, result) => {
-    connection.query("CALL crud_persona('DELETE', $1, '', '', '', '', '', 0, '', '')", [id], (err, res) => {
+  remove = (id,idusuario,fecha, result) => {
+    connection.query(`CALL crud_persona('DELETE', $1, '', '', '', '', '', 0, '', '',${idusuario},'${fecha}')`, [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

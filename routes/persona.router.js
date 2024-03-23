@@ -60,6 +60,8 @@ router.post('/', async (req, res) => {
     });
   }
 
+  const idusuario = req.usuario.id;
+
   const values = {
     p_operacion: 'INSERT',
     p_id_persona: 0,
@@ -71,7 +73,9 @@ router.post('/', async (req, res) => {
     p_telefono: req.body.telefono,
     p_celular: req.body.celular,
     p_email: req.body.email,
-    p_foto: req.body.foto
+    p_foto: req.body.foto,
+    p_id_usuario_reg: idusuario,
+    p_fecha_reg: new Date()
   };
 
 
@@ -91,6 +95,7 @@ router.patch('/:id', async (req, res) => {
       message: "No hay elementos"
     });
   }
+  const idusuario = req.usuario.id;
 
   const values = {
     p_operacion: req.body.operacion,
@@ -103,7 +108,9 @@ router.patch('/:id', async (req, res) => {
     p_telefono: req.body.telefono,
     p_celular: req.body.celular,
     p_email: req.body.email,
-    p_foto: req.body.foto
+    p_foto: req.body.foto,
+    p_id_usuario_mod: idusuario,
+    p_fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {
@@ -118,7 +125,7 @@ router.patch('/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  service.remove(req.params.id, (err, data) => {
+  service.remove(req.params.id, idusuario, new Date(), (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

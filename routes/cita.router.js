@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Algo salió mal en el servidor."
+          err.message || "Algo salió mal en el servidor"
       });
     else res.json(data);
   });
@@ -59,6 +59,7 @@ router.post('/', async (req, res) => {
       message: "Content can not be empty!"
     });
   }
+  const idusuario = req.usuario.id;
 
   const values = {
     p_id_cita: 0,
@@ -68,7 +69,9 @@ router.post('/', async (req, res) => {
     p_fecha: req.body.fecha,  // Divide la fecha y la hora y toma la fecha
     p_hora: req.body.hora,  // Divide la fecha y la hora y toma la hora
     p_paciente_id: req.body.paciente_id,
-    p_dentista_id: req.body.dentista_id
+    p_dentista_id: req.body.dentista_id,
+    p_id_usuario_reg: idusuario,
+    p_fecha_reg: new Date()
   };
 
   service.create(values, (err, data) => {
@@ -93,6 +96,7 @@ router.patch('/:id', async (req, res) => {
       message: "No hay elementos"
     });
   }
+  const idusuario = req.usuario.id;
   const values = {
     p_id_cita: req.params.id,
     p_operacion: req.body.operacion,  // Establece la operación CREATE para insertar una nueva cita
@@ -101,7 +105,9 @@ router.patch('/:id', async (req, res) => {
     p_fecha: req.body.fecha,  // Divide la fecha y la hora y toma la fecha
     p_hora: req.body.hora,  // Divide la fecha y la hora y toma la hora
     p_paciente_id: req.body.paciente_id,
-    p_dentista_id: req.body.dentista_id
+    p_dentista_id: req.body.dentista_id,
+    p_id_usuario_mod: idusuario,
+    p_fecha_mod: new Date()
   };
 
   service.updateById(req.params.id, values, (err, data) => {
@@ -175,7 +181,8 @@ router.delete('/x/:id', async (req, res) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  service.remove(req.params.id, (err, data) => {
+  const idusuario = req.usuario.id;
+  service.remove(req.params.id, idusuario, new Date(), (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
