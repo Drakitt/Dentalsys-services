@@ -20,7 +20,7 @@ class DentistaServicioServices {
 
   findById = (id, result) => {
     console.log(id);
-    connection.query(`SELECT * FROM servicio_v WHERE paciente_id = ${id}`, (err, res) => {
+    connection.query(`SELECT * FROM servicio_v WHERE dentista_id = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

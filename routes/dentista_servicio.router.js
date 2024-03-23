@@ -63,8 +63,8 @@ router.post('/', async (req, res) => {
   const values = {
     p_id_dentista_servicio: 0,
     p_operacion: 'INSERT',
-    p_dentista_id: req.body.dentista_id,
-    p_servicio_id: req.body.servicio_id
+    p_dentista_id: req.body.p_dentista_id,
+    p_servicio_id: req.body.p_servicio_id
   };
 
   service.create(values, (err, data) => {

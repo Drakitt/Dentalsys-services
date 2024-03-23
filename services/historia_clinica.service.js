@@ -56,7 +56,7 @@ class HistoriaClinicaServices {
   };
 
   GetOneById = (id, result) => {
-    connection.query(`SELECT * FROM historia_clinica_v WHERE nro_hc = ${id}`, (err, res) => {
+    connection.query(`SELECT * FROM historia_clinica_v WHERE paciente_id = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
