@@ -128,8 +128,7 @@ router.post('/mes', async (req, res) => {
     });
   }
   const values = {
-    p_mes: req.body.mes,
-    p_año: req.body.año
+    p_fecha: req.body.fecha,
   };
   service.GetByMonth(values, (err, data) => {
     if (err)

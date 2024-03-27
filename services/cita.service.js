@@ -32,7 +32,7 @@ class CitasServices {
   };
 
   GetByMonth = (newValues, result) => {
-    connection.query(`SELECT * FROM cita_v WHERE DATE_PART('MONTH',fecha) IN ('${newValues.p_mes}') AND DATE_PART('YEAR',fecha) IN ('${newValues.p_año}') `, (err, res) => {
+    connection.query(`WHERE DATE_PART('MONTH',fecha) IN (SELECT EXTRACT(month FROM '${newValues.p_fecha}'::date)) AND DATE_PART('YEAR',fecha) IN (SELECT EXTRACT(year FROM '${newValues.p_fecha}'::date)) `, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
