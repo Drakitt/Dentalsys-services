@@ -40,11 +40,11 @@ class CitasServices {
       }
       if (res?.rows?.length) {
         console.log("devolver: ", res?.rows?.length);
-        result(null, res.rows[0]);
+        result(null, res.rows);
         return;
       }
 
-      result({ kind: "no se encontraron citas" });
+      result([]);
     });
   };
 
@@ -85,6 +85,7 @@ class CitasServices {
 
   create = (newValues, result) => {
     connection.query(
+           
       "CALL public.crud_cita($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
       [
         newValues.p_id_cita,
