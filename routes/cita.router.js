@@ -99,7 +99,7 @@ router.patch('/:id', async (req, res) => {
   const idusuario = req.usuario.id;
   const values = {
     p_id_cita: req.params.id,
-    p_operacion: req.body.operacion,  // Establece la operación CREATE para insertar una nueva cita
+    p_operacion: "UPDATE",  // Establece la operación CREATE para insertar una nueva cita
     p_razon: req.body.razon,
     p_detalles: req.body.detalles,
     p_fecha: req.body.fecha,  // Divide la fecha y la hora y toma la fecha
