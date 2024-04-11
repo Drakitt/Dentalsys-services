@@ -18,6 +18,17 @@ class ReporteServices {
     });
   };
 
+  dentista_activo = result => {
+    connection.query("SELECT nombre, apellido_paterno, apellido_materno, celular, email, ci, direccion, telefono, foto, activo FROM public.dentista_v WHERE activo = true", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("reporte: ", res?.rows?.length);
+      result(null, res.rows);
+    });
+  };
   findById = (id, result) => {
     console.log(id);
     connection.query(`SELECT * FROM reporte WHERE ci_paciente LIKE '%${id}%' OR celular_paciente LIKE '%${id}%'`, (err, res) => {
@@ -89,6 +100,30 @@ class ReporteServices {
       }
       console.log("valores ingresados: ", { id: res.insertId, ...newValues });
       result(null, { id: res.insertId, ...newValues });
+    });
+  };
+  citas = (newValues, result) => {
+    connection.query(
+      `SELECT * FROM cita_v WHERE fecha BETWEEN '${newValues.p_fecha_ini}' AND '${newValues.p_fecha_fin}'`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      console.log("ci ", res.rows);
+      result(null, res.rows);
+    });
+  };
+  paciente_cita = (newValues, result) => {
+    connection.query(
+      `SELECT p.* FROM paciente_v p JOIN cita_v c ON p.id_paciente = c.paciente_id WHERE c.fecha = '${newValues.p_fecha}';`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      console.log("ci ", res.rows);
+      result(null, res.rows);
     });
   };
 

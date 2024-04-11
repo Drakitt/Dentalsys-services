@@ -21,6 +21,16 @@ router.get('/', async (req, res) => {
   });
 })
 
+router.get('/dentista_activo', async (req, res) => {
+  service.dentista_activo((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Algo salió mal en el servidor."
+      });
+    else res.json(data);
+  });
+})
 router.get('/:id', async (req, res) => {
   service.findById(req.params.id, (err, data) => {
     if (err) {
@@ -79,6 +89,48 @@ router.post('/', async (req, res) => {
   });
 });
 
+router.post('/citas', async (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+
+  const values = {
+    p_fecha_ini: req.body.fecha_ini,
+    p_fecha_fin: req.body.fecha_fin
+  };
+
+  service.citas(values, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Algo salió mal"
+      });
+    else res.json(data);
+  });
+});
+
+router.post('/paciente_cita', async (req, res) => {
+  if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+
+  const values = {
+    p_fecha: req.body.fecha
+  };
+
+  service.paciente_cita(values, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Algo salió mal"
+      });
+    else res.json(data);
+  });
+});
 
 router.post('/prueba', async (req, res) => {
   res.json({ status: 'ok', message: 'request succed' });
