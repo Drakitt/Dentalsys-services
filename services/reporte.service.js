@@ -116,7 +116,7 @@ class ReporteServices {
   };
   paciente_cita = (newValues, result) => {
     connection.query(
-      `SELECT p.* FROM paciente_v p JOIN cita_v c ON p.id_paciente = c.paciente_id WHERE c.fecha = '${newValues.p_fecha}';`, (err, res) => {
+      `SELECT p.* FROM paciente_v p JOIN cita_v c ON p.id_paciente = c.paciente_id WHERE c.fecha = '${newValues.p_fecha}' AND c.estado = 'atendido';`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
