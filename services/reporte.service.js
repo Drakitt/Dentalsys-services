@@ -19,7 +19,7 @@ class ReporteServices {
   };
 
   dentista_activo = result => {
-    connection.query("SELECT nombre, apellido_paterno, apellido_materno, celular, email, ci, direccion, telefono, foto, activo FROM public.dentista_v WHERE activo = true", (err, res) => {
+    connection.query("SELECT nombre, apellido_paterno, apellido_materno, celular, email, ci, direccion, telefono, foto, activo FROM public.dentista_v", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
