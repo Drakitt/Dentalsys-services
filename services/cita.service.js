@@ -18,6 +18,18 @@ class CitasServices {
     });
   };
 
+  updateState = (id, result) => {
+    connection.query(`UPDATE public.cita SET estado='atendido' WHERE id_cita=${id};`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("citas: ", res);
+      result(null, res);
+    });
+  };
+
   findById = (id, result) => {
     console.log(id);
     connection.query(`SELECT * FROM cita_v ci_paciente SIMILAR TO '%${id}%'`, (err, res) => {

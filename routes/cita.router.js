@@ -53,6 +53,22 @@ router.get('/one/:id', async (req, res) => {
   });
 })
 
+router.get('/atendido/:id', async (req, res) => {
+  service.updateState(req.params.id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `no se encontró el id id ${req.params.id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "algo salió mal al encontrar el id " + req.params.id
+        });
+      }
+    } else res.send('Changed status');
+  });
+})
+
 router.post('/', async (req, res) => {
   if (!req.body) {
     res.status(400).send({
