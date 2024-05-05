@@ -1,25 +1,12 @@
 const { response } = require('express');
 const express = require('express');
 const connection = require('../database/database');
-const CitasServices = require('../services/cita.service');
+const OdontoServices = require('../services/odonto.service');
 
 const router = express.Router();
-const service = new CitasServices();
+const service = new OdontoServices();
 
-router.get('/xxx', async (req, res) => {
-  res.json({ text: 'the ad doesnt exist' });
-})
 
-router.get('/', async (req, res) => {
-  service.getAll((err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Algo salió mal en el servidor"
-      });
-    else res.json(data);
-  });
-})
 
 router.get('/:id', async (req, res) => {
   service.findById(req.params.id, (err, data) => {
@@ -37,24 +24,9 @@ router.get('/:id', async (req, res) => {
   });
 })
 
-router.get('/one/:id', async (req, res) => {
-  service.GetOneById(req.params.id, (err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `no se encontró el id id ${req.params.id}.`
-        });
-      } else {
-        res.status(500).send({
-          message: "algo salió mal al encontrar el id " + req.params.id
-        });
-      }
-    } else res.send(data);
-  });
-})
 
-router.put('/atendido/:id', async (req, res) => {
-  service.updateState(req.params.id, (err, data) => {
+router.get('/fc/:id', async (req, res) => {
+  service.findByIdFc(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).json({
@@ -68,10 +40,7 @@ router.put('/atendido/:id', async (req, res) => {
         });
       }
     } else {
-      res.status(200).json({
-        success: true,
-        message: 'Estado cambiado correctamente'
-      });
+      res.status(200).json(data);
     }
   });
 });
@@ -86,14 +55,11 @@ router.post('/', async (req, res) => {
   const idusuario = req.usuario.id;
 
   const values = {
-    p_id_cita: 0,
-    p_operacion: 'INSERT',  // Establece la operación CREATE para insertar una nueva cita
-    p_razon: req.body.razon,
-    p_detalles: req.body.detalles,
-    p_fecha: req.body.fecha,  // Divide la fecha y la hora y toma la fecha
-    p_hora: req.body.hora,  // Divide la fecha y la hora y toma la hora
-    p_paciente_id: req.body.paciente_id,
-    p_dentista_id: req.body.dentista_id,
+    p_id_horario: 0,
+    p_operacion: 'INSERT',
+    p_hora: req.body.hora,
+    p_dia: req.body.dia,
+    p_turno: req.body.turno,
     p_id_usuario_reg: idusuario,
     p_fecha_reg: new Date()
   };
@@ -120,18 +86,10 @@ router.patch('/:id', async (req, res) => {
       message: "No hay elementos"
     });
   }
-  const idusuario = req.usuario.id;
+ 
   const values = {
-    p_id_cita: req.params.id,
-    p_operacion: "UPDATE",  // Establece la operación CREATE para insertar una nueva cita
-    p_razon: req.body.razon,
-    p_detalles: req.body.detalles,
-    p_fecha: req.body.fecha,  // Divide la fecha y la hora y toma la fecha
-    p_hora: req.body.hora,  // Divide la fecha y la hora y toma la hora
-    p_paciente_id: req.body.paciente_id,
-    p_dentista_id: req.body.dentista_id,
-    p_id_usuario_mod: idusuario,
-    p_fecha_mod: new Date()
+    json_serialized: req.body.json_serialized,
+
   };
 
   service.updateById(req.params.id, values, (err, data) => {
@@ -139,48 +97,6 @@ router.patch('/:id', async (req, res) => {
       res.status(500).send({
         message:
           err.message || "Algo salió mal"
-      });
-    else res.send(data);
-  });
-
-})
-
-router.post('/mes', async (req, res) => {
-  if (!req.body) {
-    res.status(400).send({
-      message: "No hay elementos"
-    });
-  }
-  const values = {
-    p_fecha: req.body.fecha,
-  };
-  service.GetByMonth(values, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "no se encontraron citas"
-      });
-    else res.send(data);
-  });
-
-})
-
-router.post('/semana', async (req, res) => {
-  if (!req.body) {
-    res.status(400).send({
-      message: "No hay elementos"
-    });
-  }
-  const values = {
-    p_semana: req.body.semana,
-    p_mes: req.body.mes,
-    p_año: req.body.año
-  };
-  service.GetByWeek(values, (err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "no se encontraron citas"
       });
     else res.send(data);
   });
@@ -205,7 +121,7 @@ router.delete('/x/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const idusuario = req.usuario.id;
-  service.remove(req.params.id, idusuario, new Date().toISOString(), (err, data) => {
+  service.remove(req.params.id, idusuario, new Date(), (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

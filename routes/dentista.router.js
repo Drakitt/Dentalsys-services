@@ -13,7 +13,7 @@ router.get('/xxx', async (req, res) => {
 })
 
 router.get('/', async (req, res, next) => {
-  service.getAllLimit((err, data) => {
+  service.getAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
