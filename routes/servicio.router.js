@@ -60,6 +60,7 @@ router.post('/', async (req, res) => {
     });
   }
 
+  const idusuario = req.usuario.id;
   const values = {
     p_id_servicio: 0,
     p_operacion: 'INSERT',
