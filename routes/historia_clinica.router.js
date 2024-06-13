@@ -93,9 +93,7 @@ router.get('/one/:id', async (req, res) => {
           message: `no se encontró el id id ${req.params.id}.`
         });
       } else {
-        res.status(500).send({
-          message: "algo salió mal al encontrar el id " + req.params.id
-        });
+        res.status(204).send([]);
       }
     } else res.send(data);
   });

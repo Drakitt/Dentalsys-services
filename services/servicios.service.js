@@ -1,13 +1,13 @@
 const faker = require('faker');
 const connection = require('../database/database');
-class TratamientoServices {
+class ServiciosServices {
 
   constructor() {
     this.tratamiento = [];
   }
 
   getAll = result => {
-    connection.query("SELECT * FROM tratamientos", (err, res) => {
+    connection.query("SELECT * FROM servicios", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -32,7 +32,10 @@ class TratamientoServices {
   };
 
   GetOneById = (id, result) => {
-    connection.query(`SELECT * FROM tratamientos WHERE id_tratamiento = ${id}`, (err, res) => {
+    connection.query(`SELECT s.* ,sv.costo
+      FROM servicio sv
+      INNER JOIN servicios s ON sv.id_servicio = s.id_servicio
+      WHERE s.id= ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -65,7 +68,10 @@ class TratamientoServices {
 
 
       const nro_hc = res1.rows[0]?.nro_hc;
-      const query2 = `SELECT * FROM tratamientos WHERE nro_hc = ${nro_hc}`;
+      const query2 = `SELECT sv.*, s.tipo ,s.costo
+      FROM servicios sv
+      INNER JOIN servicio s ON sv.id_servicio = s.id_servicio
+      WHERE sv.nro_hc= ${nro_hc}`;
   console.log(nro_hc)
       connection.query(query2, (err, res2) => {
         if (err) {
@@ -87,10 +93,10 @@ class TratamientoServices {
   
   create = (newValues, result) => {
     connection.query(
-        `INSERT INTO tratamientos (nro_hc, nombre_tratamiento, descripcion, fecha) 
-         VALUES ($1, $2, $3, $4)`,
+        `INSERT INTO servicios (nro_hc, id_servicio, fecha) 
+         VALUES ($1, $2, $3)`,
         [
-            newValues.nro_hc, newValues.nombre_tratamiento, newValues.descripcion, newValues.fecha,
+            newValues.nro_hc, newValues.id_servicio, newValues.fecha,
         ],
         (err, res) => {
             if (err) {
@@ -105,14 +111,14 @@ class TratamientoServices {
 };
 
 updateById = (id, updatedValues, result) => {
-  let query = `UPDATE tratamientos SET nombre_tratamiento = $2, descripcion = $3, fecha = $4`;
-  let values = [id, updatedValues.nombre_tratamiento, updatedValues.descripcion, updatedValues.fecha];
+  let query = `UPDATE servicios SET fecha = $2, id_servicio = $3`;
+  let values = [id, updatedValues.fecha, updatedValues.id_servicio];
 
   if (updatedValues.pagado !== undefined) {
-    query += `, pagado = $5 WHERE id_tratamiento = $1`;
+    query += `, pagado = $4 WHERE id = $1`;
     values.push(updatedValues.pagado);
   } else {
-    query += ` WHERE id_tratamiento = $1`;
+    query += ` WHERE id = $1`;
   }
 
   connection.query(query, values, (err, res) => {
@@ -147,4 +153,4 @@ updateById = (id, updatedValues, result) => {
   };
 
 }
-module.exports = TratamientoServices;
+module.exports = ServiciosServices;

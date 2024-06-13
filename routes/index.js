@@ -19,6 +19,8 @@ const reporteRouter = require('./reporte.router');
 const odntoRouter = require('./odonto.router');
 const authServices = require('./../services/auth.service');
 const fiRouter = require('./finalcial.router');
+const traRouter = require('./tratamiento.router');
+const srRouter = require('./servicios.router');
 const servicAuth = new authServices();
 
 function routerApi(app) {
@@ -41,6 +43,8 @@ function routerApi(app) {
   router.use('/reporte',servicAuth.verificarToken, reporteRouter);
   router.use('/odontograma', odntoRouter);
   router.use('/cobros', fiRouter);
+  router.use('/tratamientos', traRouter);
+  router.use('/servicios', srRouter);
   router.use('/auth', authRouter);
 }
 

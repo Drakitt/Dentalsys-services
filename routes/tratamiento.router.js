@@ -1,10 +1,10 @@
 const { response } = require('express');
 const express = require('express');
 const connection = require('../database/database');
-const CitasServices = require('../services/tratamiento.service');
+const TratamientoServices = require('../services/tratamiento.service');
 
 const router = express.Router();
-const service = new CitasServices();
+const service = new TratamientoServices();
 
 router.get('/xxx', async (req, res) => {
   res.json({ text: 'the ad doesnt exist' });
@@ -53,6 +53,20 @@ router.get('/one/:id', async (req, res) => {
   });
 })
 
+router.get('/all/:id', async (req, res) => {
+  service.GetOneByHcId(req.params.id, (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `no se encontró el id id ${req.params.id}.`
+        });
+      } else {
+        res.status(204).send([]);
+      }
+    } else res.send(data);
+  });
+})
+
 router.post('/', async (req, res) => {
   if (!req.body) {
     res.status(400).send({
@@ -60,25 +74,14 @@ router.post('/', async (req, res) => {
     });
   }
 
-  const values = {
-    p_id_tratamiento: 0,
-    p_operacion: 'INSERT',
-    p_fecha: req.body.fecha,
-    p_observacion: req.body.observacion,
-    p_prescripcion: req.body.prescripcion,
-    p_cuenta: req.body.cuenta,
-    p_saldo: req.body.saldo,
-    p_diagnostico: req.body.diagnostico,
-    p_nro_hc: req.body.nro_hc
-  };
-
-  service.create(values, (err, data) => {
+  const newCobro = req.body;
+  service.create(newCobro, (err, data) => {
     if (err)
       res.status(500).send({
         message:
           err.message || "Algo salió mal"
       });
-    else res.json({ status: 'ok', message: 'request succed', data: data });
+    else res.json({ status: 'ok', message: 'OK', data: data });
   });
 });
 
@@ -94,19 +97,9 @@ router.patch('/:id', async (req, res) => {
       message: "No hay elementos"
     });
   }
-  const values = {
-    p_id_tratamiento: req.body.id_tratamiento,
-    p_operacion: 'UPDATE',
-    p_fecha: req.body.fecha,
-    p_observacion: req.body.observacion,
-    p_prescripcion: req.body.prescripcion,
-    p_cuenta: req.body.cuenta,
-    p_saldo: req.body.saldo,
-    p_diagnostico: req.body.diagnostico,
-    p_nro_hc: req.body.nro_hc
-  };
 
-  service.updateById(req.params.id, values, (err, data) => {
+  const newCobro = req.body;
+  service.updateById(req.params.id, newCobro, (err, data) => {
     if (err)
       res.status(500).send({
         message:
