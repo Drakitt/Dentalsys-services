@@ -6,6 +6,50 @@ class TratamientoServices {
     this.tratamiento = [];
   }
 
+  getTrata = async (startDate, ci) => {
+   
+    let query = `
+      SELECT
+          t.*,
+          per.nombre AS paciente_nombre,
+          per.apellido_paterno AS paciente_apellido_paterno,
+          per.apellido_materno AS paciente_apellido_materno,
+          per.direccion AS paciente_direccion,
+          per.celular AS paciente_celular,
+          per.email AS paciente_email,
+          per.ci
+      FROM
+          public.tratamientos t
+      JOIN
+          public.historia_clinica hc ON t.nro_hc = hc.nro_hc 
+      JOIN
+          public.paciente p ON hc.paciente_id = p.id_paciente
+      JOIN
+          public.persona per ON p.persona_id = per.id_persona
+      WHERE
+      1=1
+  `;
+  
+  
+  if (startDate) {
+    query += ` AND T.fecha = '${startDate}'`;
+  }
+
+  if (ci) {
+    query += ` AND per.ci = '${ci}'`;
+  }
+
+  
+    query += ' ORDER BY t.fecha';
+  
+    try {
+      const result = await connection.query(query);
+    
+      return result.rows;
+    } catch (err) {
+      throw err;
+    }
+  };
   getAll = result => {
     connection.query("SELECT * FROM tratamientos", (err, res) => {
       if (err) {

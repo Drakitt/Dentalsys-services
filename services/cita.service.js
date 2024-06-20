@@ -6,6 +6,62 @@ class CitasServices {
     this.citas = [];
   }
 
+
+   getCitas = async (startDate, ci) => {
+   
+    let query = `
+    SELECT
+      per.ci,
+      c.id_cita,
+      c.razon,
+      c.detalles,
+      c.fecha,
+      c.hora,
+      per.nombre AS paciente_nombre,
+      per.apellido_paterno AS paciente_apellido_paterno,
+      per.apellido_materno AS paciente_apellido_materno,
+      per.direccion AS paciente_direccion,
+      per.celular AS paciente_celular,
+      per.email AS paciente_email,
+  
+      co.monto,
+      co.fecha_pago,
+      co.metodo_pago
+    FROM
+      public.cita c
+    JOIN
+      public.paciente p ON c.paciente_id = p.id_paciente
+    JOIN
+      public.persona per ON p.persona_id = per.id_persona
+    JOIN
+      public.dentista d ON c.dentista_id = d.id_dentista
+    LEFT JOIN
+      public.cobros co ON c.id_cita = co.id_cita
+    WHERE
+    1=1
+  `;
+  
+  
+  if (startDate) {
+    query += ` AND c.fecha BETWEEN '${startDate}' AND CURRENT_DATE`;
+  }
+
+  if (ci) {
+    query += ` AND per.ci = '${ci}'`;
+  }
+
+  
+    query += ' ORDER BY c.fecha, c.hora';
+  
+    try {
+      const result = await connection.query(query);
+    
+      return result.rows;
+    } catch (err) {
+      throw err;
+    }
+  };
+
   getAll = result => {
     connection.query("SELECT * FROM cita_v", (err, res) => {
       if (err) {

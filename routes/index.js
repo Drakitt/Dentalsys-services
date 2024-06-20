@@ -26,7 +26,7 @@ const servicAuth = new authServices();
 function routerApi(app) {
   const router = express.Router();
   app.use('/api/v1', router)
-  router.use('/cita',servicAuth.verificarToken, citaRouter);
+  router.use('/cita', citaRouter);
   router.use('/seguimiento', servicAuth.verificarToken,seguimientoRouter);
   router.use('/dentista',servicAuth.verificarToken, dentistasRouter);
   router.use('/persona', servicAuth.verificarToken,personasRouter);

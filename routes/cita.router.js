@@ -9,6 +9,22 @@ const service = new CitasServices();
 router.get('/xxx', async (req, res) => {
   res.json({ text: 'the ad doesnt exist' });
 })
+router.get('/reporte-citas', async (req, res) => {
+  const { ci, startDate } = req.query;
+/*
+  if (!startDate) {
+    return res.status(400).send('Debe proporcionar la fecha de inicio (startDate).');
+  }*/
+
+  try {
+    const citas = await service.getCitas(startDate, ci);
+    res.json(citas);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error en la consulta');
+  }
+});
+
 
 router.get('/', async (req, res) => {
   service.getAll((err, data) => {

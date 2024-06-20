@@ -9,7 +9,21 @@ const service = new TratamientoServices();
 router.get('/xxx', async (req, res) => {
   res.json({ text: 'the ad doesnt exist' });
 })
+router.get('/reporte-tratamiento', async (req, res) => {
+  const { ci, startDate } = req.query;
+/*
+  if (!startDate) {
+    return res.status(400).send('Debe proporcionar la fecha de inicio (startDate).');
+  }*/
 
+  try {
+    const tratamientos = await service.getTrata(startDate, ci);
+    res.json(tratamientos);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error en la consulta');
+  }
+});
 router.get('/', async (req, res) => {
   service.getAll((err, data) => {
     if (err)
