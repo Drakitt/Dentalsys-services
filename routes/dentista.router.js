@@ -11,7 +11,27 @@ const serviceP = new PersonaServices();
 router.get('/xxx', async (req, res) => {
   res.json({ text: 'the ad doesnt exist' });
 })
-
+router.get('/actives', async (req, res, next) => {
+  service.getActives((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || "Algo salió mal en el servidor."
+      });
+    else {
+      service.countAll((err, data2) => {
+        if (err)
+          res.status(500).send({
+            message:
+              err.message || "Algo salió mal en el servidor."
+          });
+        else {
+          res.status(200).json({ data, data2, pagination: Math.ceil(300/20) });
+        }
+      });
+    }
+  });
+})
 router.get('/', async (req, res, next) => {
   service.getAll((err, data) => {
     if (err)

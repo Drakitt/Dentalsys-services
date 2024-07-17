@@ -5,7 +5,17 @@ class DentistaServices {
   constructor() {
     this.dentista = [];
   }
-
+  getActives = result => {
+    connection.query(`SELECT * FROM dentista_v where activo =true`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("dentistas: ", res?.rows?.length);
+      result(null, res);
+    });
+  };
   getAll = result => {
     connection.query("SELECT * FROM dentista_v", (err, res) => {
       if (err) {

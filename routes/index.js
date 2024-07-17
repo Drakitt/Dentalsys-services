@@ -26,7 +26,7 @@ const servicAuth = new authServices();
 function routerApi(app) {
   const router = express.Router();
   app.use('/api/v1', router)
-  router.use('/cita', citaRouter);
+  router.use('/cita', servicAuth.verificarToken,citaRouter);
   router.use('/seguimiento', servicAuth.verificarToken,seguimientoRouter);
   router.use('/dentista',servicAuth.verificarToken, dentistasRouter);
   router.use('/persona', servicAuth.verificarToken,personasRouter);
@@ -42,9 +42,9 @@ function routerApi(app) {
   router.use('/dashboard',servicAuth.verificarToken, dashboardRouter);
   router.use('/reporte',servicAuth.verificarToken, reporteRouter);
   router.use('/odontograma', odntoRouter);
-  router.use('/cobros', fiRouter);
-  router.use('/tratamientos', traRouter);
-  router.use('/servicios', srRouter);
+  router.use('/cobros',servicAuth.verificarToken, fiRouter);
+  router.use('/tratamientos',servicAuth.verificarToken, traRouter);
+  router.use('/servicios', servicAuth.verificarToken,srRouter);
   router.use('/auth', authRouter);
 }
 

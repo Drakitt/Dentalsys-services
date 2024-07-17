@@ -143,7 +143,7 @@ class PacienteServices {
   remove = (id,idusuario,fecha, result) => {
     connection.query(`CALL crud_paciente($1, 'DELETE', 0, '', '', '', '', '', '2012-12-12', '',0,'',0,${idusuario},'${fecha}')`, [id], (err, res) => {
       if (err) {
-        console.log("error: ", err);
+        console.log("error 3: ", err);
         result(null, err);
         return;
       }
