@@ -172,10 +172,7 @@ router.post('/mes', async (req, res) => {
   };
   service.GetByMonth(values, (err, data) => {
     if (err)
-      res.status(500).send({
-        message:
-          err.message || "no se encontraron citas"
-      });
+      res.status(200).send([]);
     else res.send(data);
   });
 

@@ -134,7 +134,7 @@ router.delete('/x/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const idusuario = req.usuario.id;
-  service.remove(req.params.id, idusuario, new Date(), (err, data) => {
+  service.remove(req.params.id, idusuario, new Date().toISOString(), (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({

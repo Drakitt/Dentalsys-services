@@ -7,7 +7,7 @@ class HorarioServices {
   }
 
   getAll = result => {
-    connection.query("SELECT * FROM horario", (err, res) => {
+    connection.query("SELECT * FROM horario where activo =true", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
