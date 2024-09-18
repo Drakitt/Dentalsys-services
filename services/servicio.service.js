@@ -7,7 +7,7 @@ class ServicioServices {
   }
 
   getAll = result => {
-    connection.query("SELECT * FROM servicio", (err, res) => {
+    connection.query("SELECT * FROM servicio WHERE activo = true", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -95,7 +95,7 @@ class ServicioServices {
   };
 
   remove = (id,idusuario,fecha, result) => {
-    connection.query(`CALL public.crud_servicio($1,'DELETE','','',0,${idusuario},'${fecha}')`, [id], (err, res) => {
+    connection.query(`CALL public.crud_servicio($1,'DELETE','','',0,$2,$3)`, [id,idusuario,fecha], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

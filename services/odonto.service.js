@@ -1,7 +1,7 @@
 const faker = require('faker');
 const connection = require('../database/database');
 class OdontoServices {
-   
+
   constructor() {
     this.odonto = [];
   }
@@ -26,11 +26,26 @@ class OdontoServices {
         result(err, null);
         return;
       }
-  
 
-      /*if (res.rows.length === 0) {
+        const rows = res;
+        result(null, rows.rows);
 
-        connection.query(`SELECT default_json FROM catalog LIMIT 1`, (err, resCatalog) => {
+    });
+  };
+
+  findByIdFc = (id, result) => {
+
+    connection.query(`SELECT * FROM odontograma WHERE nro_hc = ${id}`, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+
+
+      if (res.rows.length === 0) {
+
+        connection.query(`SELECT default_json FROM catalog WHERE id=2`, (err, resCatalog) => {
           if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -38,7 +53,7 @@ class OdontoServices {
           }
           if (resCatalog.rows.length  > 0) {
             const defaultJson = resCatalog.rows[0].default_json;
-            connection.query(`INSERT INTO odontograma (nro_hc, json_serialized) VALUES (${id}, '${JSON.stringify(defaultJson)}') RETURNING *`, (err, resInsert) => {
+            connection.query(`INSERT INTO odontograma (nro_hc, json_serialized_kid) VALUES (${id}, '${JSON.stringify(defaultJson)}') RETURNING *`, (err, resInsert) => {
               if (err) {
                 console.log("error: ", err);
                 result(err, null);
@@ -52,26 +67,7 @@ class OdontoServices {
             result(null, { message: "No se encontraron registros en la tabla catalog." });
           }
         });
-      } else {*/
-        const rows = res;
-        result(null, rows.rows);
-      
-    });
-  };
-  
-  findByIdFc = (id, result) => {
-
-    connection.query(`SELECT * FROM odontograma WHERE nro_hc = ${id}`, (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return;
-      }
-    
-
-      if (res.rows.length === 0) {
-
-        connection.query(`SELECT default_json FROM catalog LIMIT 1`, (err, resCatalog) => {
+        connection.query(`SELECT default_json FROM catalog WHERE id=1`, (err, resCatalog) => {
           if (err) {
             console.log("error: ", err);
             result(err, null);
@@ -98,7 +94,7 @@ class OdontoServices {
         const rows = res;
         result(null, rows.rows[0]);
       }
-      
+
     });
   };
 
@@ -150,7 +146,7 @@ class OdontoServices {
       `UPDATE odontograma SET json_serialized = $1 WHERE nro_hc = ${id}`,
       [
         newValues.json_serialized,
- 
+
       ], (err, res) => {
       if (err) {
         console.log("error: ", err);

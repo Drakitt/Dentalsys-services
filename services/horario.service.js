@@ -7,7 +7,7 @@ class HorarioServices {
   }
 
   getAll = result => {
-    connection.query("SELECT * FROM horario", (err, res) => {
+    connection.query("SELECT * FROM horario WHERE activo = true", (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
@@ -97,7 +97,7 @@ class HorarioServices {
   };
 
   remove = (id,idusuario,fecha, result) => {
-    connection.query(`CALL public.crud_horario($1,'DELETE','','','',${idusuario}, '${fecha}')`, [id], (err, res) => {
+    connection.query(`CALL public.crud_horario($1,'DELETE','','','',$2, $3)`, [id,idusuario,fecha], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);

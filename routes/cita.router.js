@@ -2,6 +2,7 @@ const { response } = require('express');
 const express = require('express');
 const connection = require('../database/database');
 const CitasServices = require('../services/cita.service');
+const { USER } = require('../keys2');
 
 const router = express.Router();
 const service = new CitasServices();
@@ -219,7 +220,9 @@ router.delete('/x/:id', async (req, res) => {
   });
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res,) => {
+  console.log(req.usuario)
+  return
   const idusuario = req.usuario.id;
   service.remove(req.params.id, idusuario, new Date().toISOString(), (err, data) => {
     if (err) {
