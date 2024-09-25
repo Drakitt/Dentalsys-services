@@ -7,7 +7,7 @@ class PacienteServices {
   }
 
   create = (newValues, result) => {
-    connection.query("CALL public.crud_paciente($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)",
+    connection.query("CALL public.crud_paciente2($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15, $16)",
     [
       newValues.p_id_paciente,
       newValues.p_operacion,
@@ -36,7 +36,7 @@ class PacienteServices {
   };
 
   updateById = (id, newValues, result) => {
-    connection.query("CALL public.crud_paciente($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)",
+    connection.query("CALL public.crud_paciente2($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15, $16)",
     [
       id,
       newValues.p_operacion,
@@ -51,6 +51,7 @@ class PacienteServices {
       newValues.p_tutor_id,
       newValues.p_sexo,
       newValues.p_edad,
+      newValues.p_foto,
       newValues.p_id_usuario_mod,
       newValues.p_fecha_mod
     ], (err, res) => {
@@ -141,7 +142,7 @@ class PacienteServices {
     });
   };
   remove = (id,idusuario,fecha, result) => {
-    connection.query(`CALL crud_paciente($1, 'DELETE', 0, '', '', '', '', '', '2012-12-12', '',0,'',0,${idusuario},'${fecha}')`, [id], (err, res) => {
+    connection.query(`CALL crud_paciente($1, 'DELETE', 0, '', '', '', '', '', '2012-12-12', '',0,'',0,'',${idusuario},'${fecha}')`, [id], (err, res) => {
       if (err) {
         console.log("error 3: ", err);
         result(null, err);

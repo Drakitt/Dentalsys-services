@@ -33,6 +33,7 @@ router.post('/', async (req, res) => {
     p_tutor_id: req.body.tutor_id,
     p_sexo: req.body.sexo,
     p_edad: req.body.edad,
+    p_foto: req.body.foto,
     p_id_usuario_reg: idusuario,
     p_fecha_reg: new Date()
   };
@@ -78,6 +79,7 @@ router.post('/nuevo', async (req, res) => {
     p_tutor_id: req.body.tutor_id,
     p_sexo: req.body.sexo,
     p_edad: req.body.edad,
+    p_foto: req.body.foto,
     p_id_usuario_reg: req.body.id_usuario_reg,
     p_fecha_reg: new Date()
   };
@@ -138,6 +140,7 @@ router.patch('/:id', async (req, res) => {
     p_tutor_id: req.body.tutor_id,
     p_sexo: req.body.sexo,
     p_edad: req.body.edad,
+    p_foto: req.body.foto,
     p_id_usuario_mod: idusuario,
     p_fecha_mod: new Date()
   };

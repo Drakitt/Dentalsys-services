@@ -21,6 +21,7 @@ const authServices = require('./../services/auth.service');
 const fiRouter = require('./finalcial.router');
 const traRouter = require('./tratamiento.router');
 const srRouter = require('./servicios.router');
+const consRouter = require('./consentimiento.router');
 const servicAuth = new authServices();
 
 function routerApi(app) {
@@ -45,6 +46,7 @@ function routerApi(app) {
   router.use('/cobros',servicAuth.verificarToken, fiRouter);
   router.use('/tratamientos',servicAuth.verificarToken, traRouter);
   router.use('/servicios', servicAuth.verificarToken,srRouter);
+  router.use('/consentimiento', servicAuth.verificarToken,consRouter);
   router.use('/auth', authRouter);
 }
 
