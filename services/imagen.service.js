@@ -1,6 +1,6 @@
 const faker = require('faker');
 const connection = require('../database/database');
-class ConsentimientoServices {
+class ImagenServices {
 
   constructor() {
     this.imagen = [];
@@ -88,7 +88,7 @@ class ConsentimientoServices {
   };
 
   updateById = (id, updatedValues, result) => {
-    let query = `UPDATE imagen SET archivo = $2, titulo = $3, descripcion = $4, fecha = $5`;
+    let query = `UPDATE imagen SET archivo = $2, titulo = $3, descripcion = $4, fecha = $5 WHERE id_imagen = $1`;
     let values = [id, updatedValues.nombre_imagen, updatedValues.descripcion, updatedValues.fecha];
 
 
@@ -124,4 +124,4 @@ class ConsentimientoServices {
   };
 
 }
-module.exports = ConsentimientoServices;
+module.exports = ImagenServices;

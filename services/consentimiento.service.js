@@ -88,7 +88,7 @@ class ConsentimientoServices {
   };
 
   updateById = (id, updatedValues, result) => {
-    let query = `UPDATE consentimiento SET archivo = $2, titulo = $3, descripcion = $4, fecha = $5`;
+    let query = `UPDATE consentimiento SET archivo = $2, titulo = $3, descripcion = $4, fecha = $5 WHERE id_consentimiento = $1`;
     let values = [id, updatedValues.nombre_consentimiento, updatedValues.descripcion, updatedValues.fecha];
 
 

@@ -23,6 +23,8 @@ const traRouter = require('./tratamiento.router');
 const srRouter = require('./servicios.router');
 const consRouter = require('./consentimiento.router');
 const imgRouter = require('./imagen.router');
+const pltllaRouter = require('./plantilla.router');
+const rctaRouter = require('./receta.router');
 const servicAuth = new authServices();
 
 function routerApi(app) {
@@ -49,6 +51,8 @@ function routerApi(app) {
   router.use('/servicios', servicAuth.verificarToken,srRouter);
   router.use('/consentimiento', servicAuth.verificarToken,consRouter);
   router.use('/imagenes', servicAuth.verificarToken,imgRouter);
+  router.use('/plantilla', servicAuth.verificarToken,pltllaRouter);
+  router.use('/receta', servicAuth.verificarToken,rctaRouter);
   router.use('/auth', authRouter);
 }
 

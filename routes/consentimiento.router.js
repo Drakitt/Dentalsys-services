@@ -1,10 +1,10 @@
 const { response } = require('express');
 const express = require('express');
 const connection = require('../database/database');
-const ConsentimientoServices = require('../services/consentimiento.service');
+const ImagenServices = require('../services/consentimiento.service');
 
 const router = express.Router();
-const service = new ConsentimientoServices();
+const service = new ImagenServices();
 
 router.get('/xxx', async (req, res) => {
   res.json({ text: 'the ad doesnt exist' });

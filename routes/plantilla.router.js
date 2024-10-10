@@ -1,29 +1,15 @@
 const { response } = require('express');
 const express = require('express');
 const connection = require('../database/database');
-const RecetaServices = require('../services/receta.service');
+const PlantillaServices = require('../services/plantilla.service');
 
 const router = express.Router();
-const service = new RecetaServices();
+const service = new PlantillaServices();
 
 router.get('/xxx', async (req, res) => {
   res.json({ text: 'the ad doesnt exist' });
 })
-router.get('/reporte-receta', async (req, res) => {
-  const { ci, startDate } = req.query;
-/*
-  if (!startDate) {
-    return res.status(400).send('Debe proporcionar la fecha de inicio (startDate).');
-  }*/
 
-  try {
-    const receta = await service.getTrata(startDate, ci);
-    res.json(receta);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error en la consulta');
-  }
-});
 router.get('/', async (req, res) => {
   service.getAll((err, data) => {
     if (err)
@@ -35,21 +21,6 @@ router.get('/', async (req, res) => {
   });
 })
 
-router.get('/:id', async (req, res) => {
-  service.findById(req.params.id, (err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `no se encontró el id id ${req.params.id}.`
-        });
-      } else {
-        res.status(500).send({
-          message: "algo salió mal al encontrar el id " + req.params.id
-        });
-      }
-    } else res.send(data);
-  });
-})
 
 router.get('/one/:id', async (req, res) => {
   service.GetOneById(req.params.id, (err, data) => {
@@ -67,19 +38,6 @@ router.get('/one/:id', async (req, res) => {
   });
 })
 
-router.get('/all/:id', async (req, res) => {
-  service.GetOneByHcId(req.params.id, (err, data) => {
-    if (err) {
-      if (err.kind === "not_found") {
-        res.status(404).send({
-          message: `no se encontró el id id ${req.params.id}.`
-        });
-      } else {
-        res.status(204).send([]);
-      }
-    } else res.send(data);
-  });
-})
 
 router.post('/', async (req, res) => {
   if (!req.body) {
