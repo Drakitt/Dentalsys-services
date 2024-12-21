@@ -25,6 +25,7 @@ const consRouter = require('./consentimiento.router');
 const imgRouter = require('./imagen.router');
 const pltllaRouter = require('./plantilla.router');
 const rctaRouter = require('./receta.router');
+const docRouter = require('./doc.router');
 const servicAuth = new authServices();
 
 function routerApi(app) {
@@ -53,6 +54,7 @@ function routerApi(app) {
   router.use('/imagenes', servicAuth.verificarToken,imgRouter);
   router.use('/plantilla', servicAuth.verificarToken,pltllaRouter);
   router.use('/receta', servicAuth.verificarToken,rctaRouter);
+  router.use('/doc', servicAuth.verificarToken,docRouter);
   router.use('/auth', authRouter);
 }
 

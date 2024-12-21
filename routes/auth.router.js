@@ -8,8 +8,8 @@ const router = express.Router();
 
 const servicU = new userServices();
 const servicAuth = new authServices();
-router.get('/xxx', async(req, res) => {
-  res.json({text: 'the ad doesnt exist'});
+router.get('/xxx', async (req, res) => {
+  res.json({ text: 'the ad doesnt exist' });
 })
 router.post('/login', (req, res) => {
   const { login, password } = req.body;
@@ -22,13 +22,13 @@ router.post('/login', (req, res) => {
       return res.status(401).json({ mensaje: 'Credenciales inválidas' });
     }
 
-    res.json({ token: result.token, refreshToken:result.refreshToken, usuario_id: result.usuario_id, rol_id: result.rol_id });
+    res.json({ token: result.token, refreshToken: result.refreshToken, usuario_id: result.usuario_id, rol_id: result.rol_id });
   });
 });
 
 router.post('/refresh-token', async (req, res) => {
   const refreshToken = req.body.refreshToken;
-console.log(refreshToken)
+  console.log(refreshToken)
   if (!refreshToken) {
     return res.status(400).json({ mensaje: 'Refresh token no proporcionado' });
   }
