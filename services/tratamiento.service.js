@@ -61,6 +61,17 @@ class TratamientoServices {
       result(null, res);
     });
   };
+  getAllForOdonto = result => {
+    connection.query("SELECT * FROM tratamientos WHERE id_odontograma IS NOT NULL", (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(null, err);
+        return;
+      }
+      console.log("tratamiento: ", res?.rows?.length);
+      result(null, res);
+    });
+  };
 
   findById = (id, result) => {
     console.log(id);
@@ -146,6 +157,25 @@ class TratamientoServices {
             result(null, res);
         }
     );
+};
+
+createForOdonto = (newValues, result) => {
+  connection.query(
+      `INSERT INTO tratamientos (nro_hc, nombre_tratamiento, descripcion, fecha,id_odontograma) 
+       VALUES ($1, $2, $3, $4, $5)`,
+      [
+          newValues.nro_hc, newValues.nombre_tratamiento, newValues.descripcion, newValues.fecha,newValues.id_odontograma,
+      ],
+      (err, res) => {
+          if (err) {
+              console.log("error: ", err);
+              result(err, null);
+              return;
+          }
+          //console.log("Valores ingresados: ", res.rows[0]);
+          result(null, res);
+      }
+  );
 };
 
 updateById = (id, updatedValues, result) => {

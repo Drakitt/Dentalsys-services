@@ -27,7 +27,7 @@ const pltllaRouter = require('./plantilla.router');
 const rctaRouter = require('./receta.router');
 const docRouter = require('./doc.router');
 const servicAuth = new authServices();
-
+const prescriptionRoutes = require('./prescriptions');
 function routerApi(app) {
   const router = express.Router();
   app.use('/api/v1', router)
@@ -48,7 +48,7 @@ function routerApi(app) {
   router.use('/reporte',servicAuth.verificarToken, reporteRouter);
   router.use('/odontograma', odntoRouter);
   router.use('/cobros',servicAuth.verificarToken, fiRouter);
-  router.use('/tratamientos',servicAuth.verificarToken, traRouter);
+  router.use('/tratamientos', traRouter);
   router.use('/servicios', servicAuth.verificarToken,srRouter);
   router.use('/consentimiento', servicAuth.verificarToken,consRouter);
   router.use('/imagenes', servicAuth.verificarToken,imgRouter);
@@ -56,6 +56,7 @@ function routerApi(app) {
   router.use('/receta', servicAuth.verificarToken,rctaRouter);
   router.use('/doc', servicAuth.verificarToken,docRouter);
   router.use('/auth', authRouter);
+  router.use('/prescriptions',servicAuth.verificarToken, prescriptionRoutes);
 }
 
 module.exports = routerApi;

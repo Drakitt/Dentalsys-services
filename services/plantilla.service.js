@@ -72,24 +72,28 @@ class PlantillaServices {
   };
 
 
-
   remove = (id, result) => {
-    connection.query("CALL public.crud_plantilla($1,'DELETE','','','')", id, (err, res) => {
+    if (!id) {
+      result({ kind: "ID inválido" }, null);
+      return;
+    }
+  
+    connection.query("CALL public.crud_plantilla($1, 'DELETE', NULL, NULL, NULL)", [id], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(null, err);
         return;
       }
-
+  
       if (res.affectedRows == 0) {
         result({ kind: "no se encontró el id" }, null);
         return;
       }
-
+  
       console.log("se eliminó : ", id);
       result(null, res);
     });
   };
-
 }
+  
 module.exports = PlantillaServices;

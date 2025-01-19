@@ -52,7 +52,47 @@ router.get('/one/:id', async (req, res) => {
     } else res.send(data);
   });
 })
+router.post('/full', async (req, res) => {
 
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }
+
+
+  const { prescription_id, patient_id, prescription_text, status, doctor_id, nro_hc, nombre_tratamiento, descripcion, pagado, fecha_fin } = req.body;
+
+  const values = {
+    prescription_id,  
+    patient_id,
+    prescription_text,
+    status,
+    doctor_id,
+    nro_hc,
+    nombre_tratamiento,
+    descripcion,
+    pagado,
+    fecha_fin
+  };
+
+  try {
+
+    const data = await service.createOrUpdatePrescription(values);
+
+   
+    res.json({
+      status: 'ok',
+      message: 'Request succeeded',
+      data: data
+    });
+  } catch (err) {
+
+    res.status(500).send({
+      message: err.message || "Algo salió mal"
+    });
+  }
+});
 router.post('/', async (req, res) => {
   if (!req.body) {
     res.status(400).send({
