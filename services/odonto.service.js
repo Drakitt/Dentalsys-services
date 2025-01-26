@@ -58,50 +58,61 @@ class OdontoServices {
       });
     });
   };
+  //TO DO
+   insertDefaultValues = async (nroHc, result) => {
+    try {
+
+      const defaultIds = [1, 2];
   
-   insertDefaultValues = (nroHc, result)=> {
-    const defaultIds = [1];
-    let insertCount = 0;
+
+      let defaultValues = {
+        json_serialized: null,
+        json_serialized_kid: null,
+      };
   
-    defaultIds.forEach((id) => {
-      connection.query(
-        `SELECT default_json FROM catalog WHERE id = ${id}`,
-        (err, resCatalog) => {
-          if (err) {
-            console.log("Error al buscar en catalog: ", err);
-            result(err, null);
-            return;
+    
+      for (const id of defaultIds) {
+        const catalogQuery = `SELECT default_json FROM catalog WHERE id = ${id}`;
+        const resCatalog = await connection.query(catalogQuery);
+  
+        if (resCatalog.rows.length > 0) {
+          const defaultJson = resCatalog.rows[0].default_json;
+  
+        
+          if (id === 1) {
+            defaultValues.json_serialized = defaultJson;
+          } else if (id === 2) {
+            defaultValues.json_serialized_kid = defaultJson;
           }
-  
-          if (resCatalog.rows.length > 0) {
-            const defaultJson = resCatalog.rows[0].default_json;
-  
-            connection.query(
-              `INSERT INTO odontograma (nro_hc, ${
-                id === 1 ? "json_serialized" : "json_serialized_kid"
-              }) VALUES (${nroHc}, '${JSON.stringify(defaultJson)}') RETURNING *`,
-              (err, resInsert) => {
-                if (err) {
-                  console.log("Error al insertar en odontograma: ", err);
-                  result(err, null);
-                  return;
-                }
-  
-                console.log("Nuevo registro insertado en odontograma:", resInsert.rows[0]);
-                insertCount++;
-  
-                // Si es el último ID a insertar, devolver el resultado
-                if (insertCount === defaultIds.length) {
-                  result(null, { message: "Valores predeterminados insertados exitosamente" });
-                }
-              }
-            );
-          } else {
-            console.log(`No se encontró registro en catalog con id ${id}`);
-          }
+        } else {
+          console.log(`No se encontró registro en catalog con id ${id}`);
         }
-      );
-    });
+      }
+  
+  
+      if (defaultValues.json_serialized && defaultValues.json_serialized_kid) {
+
+        const insertQuery = `
+          INSERT INTO odontograma (nro_hc, json_serialized, json_serialized_kid)
+          VALUES ($1, $2, $3) RETURNING *
+        `;
+        const resInsert = await connection.query(insertQuery, [
+          nroHc,
+          JSON.stringify(defaultValues.json_serialized),
+          JSON.stringify(defaultValues.json_serialized_kid),
+        ]);
+  
+        console.log("Nuevo registro insertado en odontograma:", resInsert.rows[0]);
+        result(null, { message: "Valores predeterminados insertados exitosamente", data: resInsert.rows[0] });
+      } else {
+        result(null, {
+          message: "No se pudieron obtener ambos valores predeterminados para la inserción.",
+        });
+      }
+    } catch (err) {
+      console.log("Error en el proceso de inserción de valores predeterminados:", err);
+      result(err, null);
+    }
   };
   
   findByIdFc = (pacienteId, result) => {
