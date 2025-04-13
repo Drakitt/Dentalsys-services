@@ -7,34 +7,38 @@ class PacienteServices {
   }
 
   create = (newValues, result) => {
-    connection.query("CALL public.crud_paciente2($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15, $16)",
-    [
-      newValues.p_id_paciente,
-      newValues.p_operacion,
-      newValues.p_persona_id,
-      newValues.p_estado_civil,
-      newValues.p_nacion_originaria,
-      newValues.p_grado_educativo,
-      newValues.p_idioma,
-      newValues.p_lugar_nacimiento,
-      newValues.p_fecha_nacimiento,
-      newValues.p_ocupacion,
-      newValues.p_tutor_id,
-      newValues.p_sexo,
-      newValues.p_edad,
-      newValues.p_id_usuario_reg,
-      newValues.p_fecha_reg
-    ], (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return;
+    connection.query(
+      "CALL public.crud_paciente2($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)",
+      [
+        newValues.p_id_paciente,               // $1
+        newValues.p_operacion,                 // $2
+        newValues.p_persona_id,                // $3 - persona_id
+        newValues.p_estado_civil,              // $4 - estado_civil
+        newValues.p_nacion_originaria,         // $5 - nacion_originaria
+        newValues.p_grado_educativo,           // $6 - grado_educativo
+        newValues.p_idioma,                    // $7 - idioma
+        newValues.p_lugar_nacimiento,          // $8 - lugar_nacimiento
+        new Date(newValues.p_fecha_nacimiento),// $9 - fecha_nacimiento (formato correcto)
+        newValues.p_ocupacion,                 // $10 - ocupacion
+        newValues.p_tutor_id,                  // $11 - tutor_id
+        newValues.p_sexo,                      // $12 - sexo
+        newValues.p_edad,                      // $13 - edad
+        newValues.p_foto,                                  // $14 - activo
+        newValues.p_id_usuario_reg,            // $15 - id_usuario_reg
+        new Date(newValues.p_fecha_reg)        // $16 - fecha_reg
+      ],
+      (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(err, null);
+          return;
+        }
+        console.log("valores ingresados: ", { id: res.rows && res.rows[0], ...newValues });
+        result(null, { id: res.rows && res.rows[0], ...newValues });
       }
-      console.log("valores ingresados: ", { id: res.rows&&res.rows[0], ...newValues });
-      result(null, { id: res.rows&&res.rows[0], ...newValues });
-    });
+    );
   };
-
+  
   updateById = (id, newValues, result) => {
     connection.query("CALL public.crud_paciente2($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15, $16)",
     [
