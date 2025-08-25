@@ -2,7 +2,7 @@ const { response } = require('express');
 const express = require('express');
 const connection = require('../database/database');
 const CitasServices = require('../services/cita.service');
-const { USER } = require('../keys2');
+const { USER } = require('../keys');
 
 const router = express.Router();
 const service = new CitasServices();

@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
-const dbConfig = require('../keys2');
+const dbConfig = require('../keys');
+const isLocal = dbConfig.HOST === 'localhost' || dbConfig.HOST === '127.0.0.1';
 
 const connection = new Pool({
   user: dbConfig.USER,
@@ -7,7 +8,7 @@ const connection = new Pool({
   host: dbConfig.HOST,
   database: dbConfig.DB,
   port: dbConfig.PORT,
-  ssl: true
+  ssl: isLocal ? false : { rejectUnauthorized: false }
 });
 
 connection.connect()

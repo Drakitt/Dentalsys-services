@@ -236,6 +236,23 @@ router.get('/one/:id', async (req, res) => {
   });
 })
 
+router.patch('/enable/:id', async (req, res) => {
+  const idusuario = req.usuario.id;
+  service.enable(req.params.id, idusuario, new Date().toISOString(), (err, data) => {
+    if (err) {
+      if (err.kind === "not_found") {
+        res.status(404).send({
+          message: `No se encontró el id ${req.params.id}.`
+        });
+      } else {
+        res.status(500).send({
+          message: "Algo salió mal al encontrar" + req.params.id
+        });
+      }
+    } else res.send({ message: `Excelente` });
+  });
+})
+
 router.delete('/:id', async (req, res) => {
   const idusuario = req.usuario.id;
   service.remove(req.params.id, idusuario, new Date().toISOString(), (err, data) => {

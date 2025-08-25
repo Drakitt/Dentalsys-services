@@ -86,7 +86,7 @@ router.patch('/:id', async (req, res) => {
       message: "No hay elementos"
     });
   }
- 
+
   const values = {
     json_serialized: req.body.json_serialized,
 
