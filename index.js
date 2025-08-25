@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cookieParser());
 /* Solucionando error de cors y agregando limitaciones para puertos */
 
-const whiteList = ['http://localhost:8080','https://dentalsysmodel.web.app/', 'http://localhost:3000','http://localhost:4200', 'https://dentalsysdef.web.app/', ,'http://localhost:49926'];
+const whiteList = ['http://localhost:8080','https://dentalsysmodel.web.app/', 'http://localhost:3000','http://localhost:4200', 'https://dentalsysdef.web.app/', 'https://dentalsys-model.onrender.com/'];
 const options = {
   origin: (origin, callback) => {
     if (whiteList.includes(origin) || !origin) {
