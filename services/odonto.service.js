@@ -21,7 +21,7 @@ class OdontoServices {
 
   findById = (id, result) => {
     console.log(id);
-  
+
     // Primero, buscar el nro_hc en la tabla historia_clinica usando el id del paciente
     connection.query(`SELECT nro_hc FROM historia_clinica WHERE paciente_id = ${id}`, (err, resHistoria) => {
       if (err) {
@@ -29,16 +29,16 @@ class OdontoServices {
         result(err, null);
         return;
       }
-  
+
       if (resHistoria.rows.length === 0) {
         console.log("No se encontró historia clínica para el paciente.");
         result({ message: "Historia clínica no encontrada" }, null);
         return;
       }
-  
+
       const nroHc = resHistoria.rows[0].nro_hc;
       console.log("nro_hc encontrado: ", nroHc);
-  
+
       // Ahora que tenemos el nro_hc, buscar en la tabla odontograma
       connection.query(`SELECT * FROM odontograma WHERE nro_hc = ${nroHc}`, (err, resOdonto) => {
         if (err) {
@@ -46,14 +46,14 @@ class OdontoServices {
           result(err, null);
           return;
         }
-  
+
         if (resOdonto.rows.length === 0) {
           console.log("No se encontró odontograma para el nro_hc: ", nroHc);
           result({ message: "Odontograma no encontrado" }, null);
           return;
         }
-  
-        console.log("Datos encontrados en odontograma: ", resOdonto.rows[0]);
+
+        console.log("Datos encontrados en odontograma: ", resOdonto.rows[0]?.length);
         result(null, resOdonto.rows); // Devolver el primer registro de odontograma
       });
     });
@@ -63,22 +63,22 @@ class OdontoServices {
     try {
 
       const defaultIds = [1, 2];
-  
+
 
       let defaultValues = {
         json_serialized: null,
         json_serialized_kid: null,
       };
-  
-    
+
+
       for (const id of defaultIds) {
         const catalogQuery = `SELECT default_json FROM catalog WHERE id = ${id}`;
         const resCatalog = await connection.query(catalogQuery);
-  
+
         if (resCatalog.rows.length > 0) {
           const defaultJson = resCatalog.rows[0].default_json;
-  
-        
+
+
           if (id === 1) {
             defaultValues.json_serialized = defaultJson;
           } else if (id === 2) {
@@ -88,8 +88,8 @@ class OdontoServices {
           console.log(`No se encontró registro en catalog con id ${id}`);
         }
       }
-  
-  
+
+
       if (defaultValues.json_serialized && defaultValues.json_serialized_kid) {
 
         const insertQuery = `
@@ -101,7 +101,7 @@ class OdontoServices {
           JSON.stringify(defaultValues.json_serialized),
           JSON.stringify(defaultValues.json_serialized_kid),
         ]);
-  
+
         console.log("Nuevo registro insertado en odontograma:", resInsert.rows[0]);
         result(null, { message: "Valores predeterminados insertados exitosamente", data: resInsert.rows[0] });
       } else {
@@ -114,7 +114,7 @@ class OdontoServices {
       result(err, null);
     }
   };
-  
+
   findByIdFc = (pacienteId, result) => {
     // Buscar el nro_hc asociado al paciente_id
     connection.query(
@@ -125,7 +125,7 @@ class OdontoServices {
           result(err, null);
           return;
         }
-  
+
         if (res.rows.length === 0) {
           console.log("No se encontró historia clínica para el paciente.");
           result({ message: "Historia clínica no encontrada" }, null);
@@ -133,7 +133,7 @@ class OdontoServices {
         }
          console.log(res)
         const nroHc = res.rows[0].nro_hc;
-  
+
         // Buscar registros en la tabla odontograma con el nro_hc obtenido
         connection.query(
           `SELECT * FROM odontograma WHERE nro_hc = ${nroHc}`,
@@ -143,7 +143,7 @@ class OdontoServices {
               result(err, null);
               return;
             }
-  
+
             if (resOdonto.rows.length === 0) {
               // Si no se encuentran registros, buscar valores predeterminados en catalog
               this.insertDefaultValues(nroHc, result); ;
@@ -157,7 +157,7 @@ class OdontoServices {
       }
     );
   };
-  
+
 
 
 

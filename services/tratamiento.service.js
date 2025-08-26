@@ -7,7 +7,7 @@ class TratamientoServices {
   }
 
   getTrata = async (startDate, ci) => {
-   
+
     let query = `
       SELECT
           t.*,
@@ -21,7 +21,7 @@ class TratamientoServices {
       FROM
           public.tratamientos t
       JOIN
-          public.historia_clinica hc ON t.nro_hc = hc.nro_hc 
+          public.historia_clinica hc ON t.nro_hc = hc.nro_hc
       JOIN
           public.paciente p ON hc.paciente_id = p.id_paciente
       JOIN
@@ -29,22 +29,22 @@ class TratamientoServices {
       WHERE
       1=1
   `;
-  
-  
+
+
   if (startDate) {
-    query += ` AND T.fecha = '${startDate}'`;
+    query += ` AND T.fecha BETWEEN '${startDate}' AND ''`;
   }
 
   if (ci) {
     query += ` AND per.ci = '${ci}'`;
   }
 
-  
+
     query += ' ORDER BY t.fecha';
-  
+
     try {
       const result = await connection.query(query);
-    
+
       return result.rows;
     } catch (err) {
       throw err;
@@ -105,14 +105,14 @@ class TratamientoServices {
   };
    GetOneByHcId = (id, result) => {
     const query1 = `SELECT nro_hc FROM historia_clinica_v WHERE paciente_id = ${id}`;
-  
+
     connection.query(query1, (err, res1) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
         return;
       }
-  
+
       if (res1.rows.length === 0) {
         result({ kind: "no se encontró el id" }, null);
         return;
@@ -121,28 +121,28 @@ class TratamientoServices {
 
       const nro_hc = res1.rows[0]?.nro_hc;
       const query2 = `SELECT * FROM tratamientos WHERE nro_hc = ${nro_hc}`;
-  console.log(nro_hc)
+  // console.log(nro_hc)
       connection.query(query2, (err, res2) => {
         if (err) {
           console.log("error: ", err);
           result(err, null);
           return;
         }
-  
+
         if (res2.length === 0) {
           result({ kind: "no se encontró el tratamiento" }, null);
           return;
         }
-  
+
         console.log("devolver: ", res2);
         result(null, res2);
       });
     });
   };
-  
+
   create = (newValues, result) => {
     connection.query(
-        `INSERT INTO tratamientos (nro_hc, nombre_tratamiento, descripcion, fecha) 
+        `INSERT INTO tratamientos (nro_hc, nombre_tratamiento, descripcion, fecha)
          VALUES ($1, $2, $3, $4)`,
         [
             newValues.nro_hc, newValues.nombre_tratamiento, newValues.descripcion, newValues.fecha,
@@ -161,7 +161,7 @@ class TratamientoServices {
 
 createForOdonto = (newValues, result) => {
   connection.query(
-      `INSERT INTO tratamientos (nro_hc, nombre_tratamiento, descripcion, fecha,id_odontograma) 
+      `INSERT INTO tratamientos (nro_hc, nombre_tratamiento, descripcion, fecha,id_odontograma)
        VALUES ($1, $2, $3, $4, $5)`,
       [
           newValues.nro_hc, newValues.nombre_tratamiento, newValues.descripcion, newValues.fecha,newValues.id_odontograma,
