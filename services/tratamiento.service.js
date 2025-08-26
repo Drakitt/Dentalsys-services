@@ -32,7 +32,7 @@ class TratamientoServices {
 
 
   if (startDate) {
-    query += ` AND T.fecha BETWEEN '${startDate}' AND ''`;
+    query += ` AND T.fecha BETWEEN '${startDate}' AND CURRENT_DATE`;
   }
 
   if (ci) {
