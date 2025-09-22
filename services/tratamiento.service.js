@@ -142,10 +142,10 @@ class TratamientoServices {
 
   create = (newValues, result) => {
     connection.query(
-        `INSERT INTO tratamientos (nro_hc, nombre_tratamiento, descripcion, fecha)
-         VALUES ($1, $2, $3, $4)`,
+        `INSERT INTO tratamientos (nro_hc, nombre_tratamiento, descripcion, fecha, fecha_fin)
+         VALUES ($1, $2, $3, $4, $5)`,
         [
-            newValues.nro_hc, newValues.nombre_tratamiento, newValues.descripcion, newValues.fecha,
+            newValues.nro_hc, newValues.nombre_tratamiento, newValues.descripcion, newValues.fecha, newValues.fecha_fin,
         ],
         (err, res) => {
             if (err) {
@@ -179,8 +179,8 @@ createForOdonto = (newValues, result) => {
 };
 
 updateById = (id, updatedValues, result) => {
-  let query = `UPDATE tratamientos SET nombre_tratamiento = $2, descripcion = $3, fecha = $4`;
-  let values = [id, updatedValues.nombre_tratamiento, updatedValues.descripcion, updatedValues.fecha];
+  let query = `UPDATE tratamientos SET nombre_tratamiento = $2, descripcion = $3, fecha = $4, fecha_fin = $5`;
+  let values = [id, updatedValues.nombre_tratamiento, updatedValues.descripcion, updatedValues.fecha, updatedValues.fecha_fin];
 
   if (updatedValues.pagado !== undefined) {
     query += `, pagado = $5 WHERE id_tratamiento = $1`;
