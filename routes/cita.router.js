@@ -216,8 +216,8 @@ router.delete('/x/:id', async(req, res) => {
 })
 
 router.delete('/:id', async(req, res, ) => {
-    console.log(req.usuario)
-    return
+    // console.log(req.usuario)
+    // return
     const idusuario = req.usuario.id;
     service.remove(req.params.id, idusuario, new Date().toISOString(), (err, data) => {
         if (err) {
